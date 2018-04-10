@@ -1,24 +1,22 @@
-const {Menu} = require('../../models')
-const {Item} = require('../../models')
+const {ItemCategory} = require('../../models')
 
 module.exports = {
-  async createMenu (req, res) {
+  async createCategory (req, res) {
     try {
-      const menu = await Menu.create(req.body)
-      res.send(menu)
+      const category = await ItemCategory.create(req.body)
+      res.send(category)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during creating'
       })
     }
   },
-  async getAllMenus (req, res) {
+  async getAllCategories (req, res) {
     try {
-      const menu = await Menu.findAll({
+      const category = await ItemCategory.findAll({
         // podmienka
-        include: Item
       })
-      res.send(menu)
+      res.send(category)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during fetch'

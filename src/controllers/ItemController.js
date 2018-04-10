@@ -1,23 +1,25 @@
-const {Order} = require('../../models')
 const {Item} = require('../../models')
 
 module.exports = {
-  async createOrder (req, res) {
+  async createItem (req, res) {
     try {
-      const order = await Order.create(req.body)
-      res.send(order)
+      const item = await Item.create({
+        name: 'customer',
+        date: new Date()
+      })
+      res.send(item)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during creating'
       })
     }
   },
-  async getAllOrder (req, res) {
+  async getAllItems (req, res) {
     try {
-      const order = await Order.findAll({
-        include: Item
+      const item = await Item.findAll({
+        // podmienka
       })
-      res.send(order)
+      res.send(item)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during fetch'

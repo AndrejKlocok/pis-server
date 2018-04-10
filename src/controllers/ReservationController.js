@@ -1,7 +1,7 @@
 const {Reservation} = require('../../models')
 
 module.exports = {
-  async createPayment (req, res) {
+  async createReservation (req, res) {
     try {
       const reservation = await Reservation.create(req.body)
       res.send(reservation)
@@ -11,7 +11,7 @@ module.exports = {
       })
     }
   },
-  async getAllPayments (req, res) {
+  async getAllReservations (req, res) {
     try {
       const reservation = await Reservation.findAll({
         // podmienka

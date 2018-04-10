@@ -1,5 +1,5 @@
 const {Table} = require('../../models')
-
+const {Customer} = require('../../models')
 module.exports = {
   async createTable (req, res) {
     try {
@@ -15,6 +15,7 @@ module.exports = {
     try {
       const table = await Table.findAll({
         // podmienka
+        include: Customer
       })
       res.send(table)
     } catch (err) {

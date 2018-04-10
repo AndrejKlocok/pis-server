@@ -1,27 +1,25 @@
-const {Customer} = require('../../models')
+const {EmployeePosition} = require('../../models')
 
 module.exports = {
-  async createCustomer (req, res) {
+  async createPosition (req, res) {
     try {
-      const {tableId} = req.body
-      const customer = await Customer.create({
+      const position = await EmployeePosition.create({
         name: 'customer',
-        date: new Date(),
-        tableId: tableId
+        date: new Date()
       })
-      res.send(customer)
+      res.send(position)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during creating'
       })
     }
   },
-  async getAllCustomers (req, res) {
+  async getAllPositions (req, res) {
     try {
-      const customer = await Customer.findAll({
+      const position = await EmployeePosition.findAll({
         // podmienka
       })
-      res.send(customer)
+      res.send(position)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during fetch'
