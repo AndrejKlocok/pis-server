@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "pis",
+    "password": "pisheslo",
+    "database": "pis",
+    "host": "cloud.borntolive.cz",
+    "dialect": "mysql"
+  }
+}
