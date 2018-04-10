@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     })
-    Employee.hasMany(models.Payment, {
+    Employee.hasMany(models.Order, {
       foreignKey: 'employeeId',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'

@@ -23,5 +23,18 @@ module.exports = {
         error: 'An error has occured during fetch'
       })
     }
+  },
+  async getAllTablesInTime (req, res) {
+    try {
+      // const {time} = req.body
+      const table = await Table.findAll({
+        // podmienka
+      })
+      res.send(table)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
   }
 }
