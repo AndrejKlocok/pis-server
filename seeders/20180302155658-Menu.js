@@ -2,23 +2,68 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('Person', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
     return queryInterface.bulkInsert('Menus', [
       {
         id: 1,
-        name: 'Normalne menu',
-        detail: 'Menu',
+        name: 'Steaky',
+        detail: 'Obsahuje maso',
         validity: true,
-        date: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 2,
+        name: 'Prilohy',
+        detail: 'Zemiaky, ryza',
+        validity: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 3,
+        name: 'Nealkoholicke napoje',
+        detail: 'Obsahuje maso',
+        validity: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 4,
+        name: 'Tvrdy Alkohol',
+        detail: 'Obsahuje alkohol',
+        validity: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 5,
+        name: 'Vegetarianske speciality',
+        detail: 'Vegans',
+        validity: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 6,
+        name: 'Víno',
+        detail: 'Lahky alkohol',
+        validity: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 7,
+        name: 'Pivo',
+        detail: 'Lahky alkohol',
+        validity: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 8,
+        name: 'Pochutiny',
+        detail: 'Suché keksy, tyčinky',
+        validity: true,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -26,13 +71,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
     return queryInterface.bulkDelete('Menus', null, {})
   }
 }

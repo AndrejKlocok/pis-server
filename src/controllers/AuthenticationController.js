@@ -1,6 +1,6 @@
 const {Employee} = require('../../models')
 const jwt = require('jsonwebtoken')
-const config = require('../../config/config.js')
+const config = require('./config.js')
 
 function jwSignUser (user) {
   const week = 60 * 60 * 24 * 7
