@@ -2,7 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   var Customer = sequelize.define('Customer', {
     name: DataTypes.STRING,
-    date: DataTypes.DATE
+    dateIn: DataTypes.DATE,
+    dateOut: DataTypes.DATE
   }, {})
   Customer.associate = function (models) {
     // associations can be defined here

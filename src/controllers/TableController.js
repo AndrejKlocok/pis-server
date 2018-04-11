@@ -1,5 +1,7 @@
 const {Table} = require('../../models')
 const {Customer} = require('../../models')
+// const {Sequelize} = require('../../models')
+
 module.exports = {
   async createTable (req, res) {
     try {
@@ -27,8 +29,24 @@ module.exports = {
   async getAllTablesInTime (req, res) {
     try {
       // const {time} = req.body
+      // const Op = Sequelize.Op
       const table = await Table.findAll({
-        // podmienka
+        attributes: ['id', 'name', 'searCount', 'roomId'],
+        include: Customer
+        /* where: {
+          [Op.and]: [{
+            dateIn: {
+              [Op.lt]: time
+            }
+          },
+          {
+            [Op.or]: [{
+              dateOut: null
+            },{
+              dateOut:
+            }]
+          }]
+        } */
       })
       res.send(table)
     } catch (err) {

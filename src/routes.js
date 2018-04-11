@@ -1,6 +1,6 @@
 // routes to controllers
-const AuthenticationController = require('./controllers/EmployeeController')
-const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
+const EmployeeController = require('./controllers/EmployeeController')
+const EmployeeControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 const MenuController = require('./controllers/MenuController')
 const CustomerController = require('./controllers/CustomerController')
 const TableController = require('./controllers/TableController')
@@ -15,12 +15,12 @@ const RoomTypeController = require('./controllers/RoomTypeController')
 
 module.exports = (app) => {
 /* Post requests */
-  app.post('employee/register',
-    AuthenticationControllerPolicy.register,
-    AuthenticationController.register)
+  app.post('/employee/register',
+    EmployeeControllerPolicy.register,
+    EmployeeController.register)
 
-  app.post('employee/login',
-    AuthenticationController.login)
+  app.post('/employee/login',
+    EmployeeController.login)
 
   app.post('/menu/create',
     MenuController.createMenu)
@@ -42,6 +42,9 @@ module.exports = (app) => {
 
   app.post('/customer/menu',
     MenuController.getAllMenus)
+
+  app.post('/customer/leave',
+    OrderController.customerLeave)
   /* Get requests */
 
   app.get('/menu',

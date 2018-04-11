@@ -8,7 +8,7 @@ module.exports = {
         name: 'Pre Jana',
         detail: ' ',
         sum: 0,
-        paymentId: null,
+        paymentId: 1,
         customerId: 1,
         orderStateId: 1,
         employeeId: 1,

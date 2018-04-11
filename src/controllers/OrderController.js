@@ -1,5 +1,6 @@
 const {Order} = require('../../models')
 const {Item} = require('../../models')
+const {Customer} = require('../../models')
 
 module.exports = {
   async createOrder (req, res) {
@@ -61,6 +62,35 @@ module.exports = {
         }
       })
       res.send(order)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
+  },
+  async customerLeave (req, res) {
+    try {
+      const {customerId} = req.body
+      const orders = await Order.findAll({
+        where: {
+          customerId: customerId,
+          paymentId: null
+        }
+      })
+      console.log((new Date()).toJSON)
+      // ak zakaznik zaplatil objednavky
+      // mozno err
+      if (orders.length === 0) {
+        Customer.update({
+          dateOut: new Date()}, {
+          where: {
+            id: customerId
+          }
+        }).error(err => {
+          console.log(err)
+        })
+      }
+      res.send(orders)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during fetch'

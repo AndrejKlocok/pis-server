@@ -12,7 +12,6 @@ function jwSignUser (user) {
 module.exports = {
   async register (req, res) {
     try {
-      console.log(req.body)
       const employee = await Employee.create(req.body)
       res.send(employee.toJSON)
     } catch (err) {

@@ -12,9 +12,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      date: {
+      dateIn: {
         type: Sequelize.DATE,
         allowNull: false
+      },
+      dateOut: {
+        type: Sequelize.DATE,
+        allowNull: true
       },
       tableId: {
         type: Sequelize.INTEGER,
