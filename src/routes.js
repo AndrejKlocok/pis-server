@@ -79,6 +79,12 @@ module.exports = (app) => {
   app.post('/employee/roomDelete',
     RoomController.deleteRoom)
 
+  app.post('/employee/paymentCreate',
+    PaymentController.createPayment)
+
+  app.post('/menu/create',
+    MenuController.createMenu)
+
   /* Customer interface  */
   app.post('/customer/Create',
     CustomerController.createCustomer)
