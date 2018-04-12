@@ -1,4 +1,5 @@
 const {Customer} = require('../../models')
+const {Sequelize} = require('../../models')
 
 module.exports = {
   async createCustomer (req, res) {
@@ -23,6 +24,36 @@ module.exports = {
         // podmienka
       })
       res.send(customer)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
+  },
+  async getAllCustomersInTime (req, res) {
+    try {
+      const {time} = req.body
+      const Op = Sequelize.Op
+      const customers = await Customer.findAll({
+        where: Sequelize.and(
+          {
+            dateIn: {
+              [Op.lt]: time
+            }
+          },
+          Sequelize.or(
+            {
+              dateOut: null
+            },
+            {
+              dateOut: {
+                [Op.gt]: time
+              }
+            }
+          )
+        )
+      })
+      res.send(customers)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during fetch'

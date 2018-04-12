@@ -1,6 +1,7 @@
 const {Order} = require('../../models')
 const {Item} = require('../../models')
 const {Customer} = require('../../models')
+const {OrderState} = require('../../models')
 
 module.exports = {
   async createOrder (req, res) {
@@ -57,9 +58,12 @@ module.exports = {
     try {
       const {orderId} = req.body
       const order = await Order.findOne({
+        include: OrderState,
         where: {
           id: orderId
         }
+      }).err(err => {
+        console.log(err)
       })
       res.send(order)
     } catch (err) {

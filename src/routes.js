@@ -14,7 +14,13 @@ const RoomController = require('./controllers/RoomController')
 const RoomTypeController = require('./controllers/RoomTypeController')
 
 module.exports = (app) => {
-/* Post requests */
+/* Employee requests */
+  app.post('/employee/listAllCustomers',
+    CustomerController.getAllCustomers)
+
+  app.post('/employee/listCustomers',
+    CustomerController.getAllCustomersInTime)
+
   app.post('/employee/register',
     EmployeeControllerPolicy.register,
     EmployeeController.register)

@@ -48,7 +48,7 @@ module.exports = {
               },
               {
                 dateOut: {
-                  [Op.lt]: time
+                  [Op.gt]: time
                 }
               }
             )
