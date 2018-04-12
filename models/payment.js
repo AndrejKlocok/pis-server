@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     })
+
+    Payment.belongsTo(models.Employee, {
+      foreignKey: 'itemCategoryId',
+      targetKey: 'id'
+    })
   }
   return Payment
 }

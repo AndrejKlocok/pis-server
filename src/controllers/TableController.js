@@ -6,11 +6,61 @@ const {sequelize} = require('../../models')
 module.exports = {
   async createTable (req, res) {
     try {
-      const table = await Table.create(req.body)
+      const {name, seatCount, roomId} = req.body
+      const table = await Table.create({
+        name: name,
+        seatCount: seatCount,
+        roomId: roomId
+      })
       res.send(table)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during creating'
+      })
+    }
+  },
+  async updateTable (req, res) {
+    try {
+      const {id, name, seatCount, roomId} = req.body
+
+      await Table.update({
+        name: name,
+        seatCount: seatCount,
+        roomId: roomId,
+        updatedAt: new Date()
+      },
+      {
+        where: {
+          id: id
+        }
+      })
+      const table = await Table.findOne({
+        where: {
+          id: id
+        }
+      })
+      res.send(table)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during updating'
+      })
+    }
+  },
+  async deleteTable (req, res) {
+    try {
+      const {id} = req.body
+      Table.destroy({
+        where: {
+          id: id
+        }
+      })
+      const table = await Table.findAll({
+        // podmienka
+      })
+      res.send(table)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during deleting'
       })
     }
   },
@@ -60,6 +110,25 @@ module.exports = {
       })
       res.send(table)
     } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
+  },
+  async getTableByCustomer (req, res) {
+    try {
+      const { customerId } = req.body
+      const table = await Table.findOne({
+        include: [{
+          model: Customer,
+          where: {
+            id: customerId
+          }
+        }]
+      })
+      res.send(table)
+    } catch (err) {
+      console.log(err)
       res.status(500).send({
         error: 'An error has occured during fetch'
       })

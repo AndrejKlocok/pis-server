@@ -49,8 +49,35 @@ module.exports = (app) => {
   app.post('/employee/menuItemDelete',
     ItemController.deleteItem)
 
-  app.post('/menu/create',
-    MenuController.createMenu)
+  app.post('/employee/tableCustomer',
+    TableController.getTableByCustomer)
+
+  app.post('/employee/tableCreate',
+    TableController.createTable)
+
+  app.post('/employee/tableChange',
+    TableController.updateTable)
+
+  app.post('/employee/tableDelete',
+    TableController.deleteTable)
+
+  app.post('/employee/roomTypeCreate',
+    RoomTypeController.createRoomType)
+
+  app.post('/employee/roomTypeChange',
+    RoomTypeController.updateRoomType)
+
+  app.post('/employee/roomTypeDelete',
+    RoomTypeController.deleteRoomType)
+
+  app.post('/employee/roomCreate',
+    RoomController.createRoom)
+
+  app.post('/employee/roomChange',
+    RoomController.updateRoom)
+
+  app.post('/employee/roomDelete',
+    RoomController.deleteRoom)
 
   /* Customer interface  */
   app.post('/customer/Create',

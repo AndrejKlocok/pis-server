@@ -2,8 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var Table = sequelize.define('Table', {
     name: DataTypes.STRING,
-    seatCount: DataTypes.INTEGER,
-    occupied: DataTypes.BOOLEAN
+    seatCount: DataTypes.INTEGER
   }, {})
   Table.associate = function (models) {
     // associations can be defined here

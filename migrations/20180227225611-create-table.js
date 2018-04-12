@@ -16,10 +16,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      occupied: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-      },
       roomId: {
         type: Sequelize.INTEGER,
         allowNull: false,
