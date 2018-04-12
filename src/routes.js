@@ -22,9 +22,31 @@ module.exports = (app) => {
   app.post('/employee/login',
     EmployeeController.login)
 
+  app.post('/employee/menuGet',
+    MenuController.getAllMenus)
+
+  app.post('/employee/menuChange',
+    MenuController.updateMenu)
+
+  app.post('/employee/menuAdd',
+    MenuController.createMenu)
+
+  app.post('/employee/menuDelete',
+    MenuController.deleteMenu)
+
+  app.post('/employee/menuItemChange',
+    ItemController.updateItem)
+
+  app.post('/employee/menuItemAdd',
+    ItemController.createItem)
+
+  app.post('/employee/menuItemDelete',
+    ItemController.deleteItem)
+
   app.post('/menu/create',
     MenuController.createMenu)
 
+  /* Customer interface  */
   app.post('/customer/Create',
     CustomerController.createCustomer)
 

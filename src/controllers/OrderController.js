@@ -77,7 +77,6 @@ module.exports = {
           paymentId: null
         }
       })
-      console.log((new Date()).toJSON)
       // ak zakaznik zaplatil objednavky
       // mozno err
       if (orders.length === 0) {
