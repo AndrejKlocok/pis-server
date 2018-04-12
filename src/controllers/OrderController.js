@@ -2,6 +2,9 @@ const {Order} = require('../../models')
 const {Item} = require('../../models')
 const {Customer} = require('../../models')
 const {OrderState} = require('../../models')
+const {Employee} = require('../../models')
+const {Payment} = require('../../models')
+const {Sequelize} = require('../../models')
 
 module.exports = {
   async createOrder (req, res) {
@@ -27,28 +30,18 @@ module.exports = {
       })
     }
   },
-  async getAllOrder (req, res) {
-    try {
-      const order = await Order.findAll({
-        include: Item
-      })
-      res.send(order)
-    } catch (err) {
-      res.status(500).send({
-        error: 'An error has occured during fetch'
-      })
-    }
-  },
   async getCustomerOrders (req, res) {
     try {
       const {customerId} = req.body
       const order = await Order.findAll({
+        include: OrderState,
         where: {
           customerId: customerId
         }
       })
       res.send(order)
     } catch (err) {
+      console.log(err)
       res.status(500).send({
         error: 'An error has occured during fetch'
       })
@@ -58,13 +51,24 @@ module.exports = {
     try {
       const {orderId} = req.body
       const order = await Order.findOne({
-        include: OrderState,
+        include: [{
+          model: Item
+        },
+        {
+          model: OrderState
+        },
+        {
+          model: Payment
+        },
+        {
+          model: Employee
+        }],
         where: {
           id: orderId
         }
-      }).err(err => {
-        console.log(err)
       })
+
+      console.log(order)
       res.send(order)
     } catch (err) {
       res.status(500).send({
@@ -81,8 +85,6 @@ module.exports = {
           paymentId: null
         }
       })
-      // ak zakaznik zaplatil objednavky
-      // mozno err
       if (orders.length === 0) {
         Customer.update({
           dateOut: new Date()}, {
@@ -93,6 +95,39 @@ module.exports = {
           console.log(err)
         })
       }
+      res.send(orders)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
+  },
+  async getAllOrdersInTime (req, res) {
+    try {
+      const {time} = req.body
+      const Op = Sequelize.Op
+      const orders = await Order.findAll({
+        include: [{
+          model: Customer,
+          where: Sequelize.and(
+            {
+              dateIn: {
+                [Op.lt]: time
+              }
+            },
+            Sequelize.or(
+              {
+                dateOut: null
+              },
+              {
+                dateOut: {
+                  [Op.gt]: time
+                }
+              }
+            )
+          )
+        }]
+      })
       res.send(orders)
     } catch (err) {
       res.status(500).send({

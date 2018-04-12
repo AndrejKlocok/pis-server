@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     })
+
+    Room.belongsTo(models.RoomType, {
+      foreignKey: 'roomTypeId',
+      targetKey: 'id'
+    })
   }
   return Room
 }

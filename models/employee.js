@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     })
+    Employee.belongsTo(models.EmployeePosition, {
+      foreignKey: 'employeePositionId',
+      targetKey: 'id'
+    })
   }
   return Employee
 }

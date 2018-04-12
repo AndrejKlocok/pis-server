@@ -16,6 +16,16 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     })
+
+    Item.belongsTo(models.Menu, {
+      foreignKey: 'menuId',
+      targetKey: 'id'
+    })
+
+    Item.belongsTo(models.ItemCategory, {
+      foreignKey: 'itemCategoryId',
+      targetKey: 'id'
+    })
   }
   return Item
 }

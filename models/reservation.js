@@ -8,6 +8,15 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   Reservation.associate = function (models) {
     // associations can be defined here
+    Reservation.belongsTo(models.Employee, {
+      foreignKey: 'employeeId',
+      targetKey: 'id'
+    })
+
+    Reservation.belongsTo(models.Table, {
+      foreignKey: 'tableId',
+      targetKey: 'id'
+    })
   }
   return Reservation
 }

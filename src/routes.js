@@ -62,6 +62,9 @@ module.exports = (app) => {
   app.post('/customer/orderList',
     OrderController.getCustomerOrders)
 
+  app.post('/customer/ordersCurrent',
+    OrderController.getAllOrdersInTime)
+
   app.post('/customer/orderAdd',
     OrderController.createOrder)
 
@@ -97,9 +100,6 @@ module.exports = (app) => {
 
   app.get('/table',
     TableController.getAllTables)
-
-  app.get('/order',
-    OrderController.getAllOrder)
 
   app.get('/position',
     EmployeePositionController.getAllPositions)

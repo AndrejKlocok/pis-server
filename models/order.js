@@ -12,6 +12,26 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     })
+
+    Order.belongsTo(models.OrderState, {
+      foreignKey: 'orderStateId',
+      targetKey: 'id'
+    })
+
+    Order.belongsTo(models.Customer, {
+      foreignKey: 'customerId',
+      targetKey: 'id'
+    })
+
+    Order.belongsTo(models.Employee, {
+      foreignKey: 'employeeId',
+      targetKey: 'id'
+    })
+
+    Order.belongsTo(models.Payment, {
+      foreignKey: 'paymentId',
+      targetKey: 'id'
+    })
   }
   return Order
 }
