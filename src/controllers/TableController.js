@@ -48,10 +48,10 @@ module.exports = {
   },
   async deleteTable (req, res) {
     try {
-      const {id} = req.body
+      const {tableId} = req.body
       Table.destroy({
         where: {
-          id: id
+          id: tableId
         }
       })
       const table = await Table.findAll({

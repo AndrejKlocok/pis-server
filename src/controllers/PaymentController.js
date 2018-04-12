@@ -34,13 +34,25 @@ module.exports = {
   },
   async getAllPayments (req, res) {
     try {
-      const payment = await Payment.findAll({
-        // podmienka
-      })
+      const payment = await Payment.findAll()
       res.send(payment)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during fetch'
+      })
+    }
+  },
+  async deletePayment (req, res) {
+    try {
+      const {paymentId} = req.body
+      Payment.destroy({
+        where: {
+          id: paymentId
+        }
+      })
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during deleting'
       })
     }
   }
