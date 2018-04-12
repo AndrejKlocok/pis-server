@@ -73,6 +73,20 @@ module.exports = (app) => {
 
   app.post('/customer/leave',
     OrderController.customerLeave)
+
+  /* Manager interface */
+  app.post('/manager/employeeGet',
+    EmployeeController.getAllEmployees)
+
+  app.post('/manager/employeeAdd',
+    EmployeeController.addNewEmployee)
+
+  app.post('/manager/employeeChange',
+    EmployeeController.updateEmployee)
+
+  app.post('/manager/employeeDelete',
+    EmployeeController.deleteEmployee)
+
   /* Get requests */
 
   app.get('/menu',
