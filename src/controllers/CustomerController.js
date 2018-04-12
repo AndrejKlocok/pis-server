@@ -6,7 +6,8 @@ module.exports = {
       const {tableId} = req.body
       const customer = await Customer.create({
         name: 'customer',
-        date: new Date(),
+        dateIn: new Date(),
+        dateOut: null,
         tableId: tableId
       })
       res.send(customer)
