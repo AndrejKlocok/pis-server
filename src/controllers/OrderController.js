@@ -10,10 +10,17 @@ module.exports = {
   async createOrder (req, res) {
     try {
       const {itemId, customerId, name, detail, employeeId} = req.body
+      var sum = 0
+      for (var i = 0, len = itemId.length; i < len; i++) {
+        var itemF = await Item.findOne({ where:
+          { id: itemId[i] }})
+        sum += itemF.price
+        console.log(itemF.price)
+      }
       const order = await Order.create({
         name: name,
         detail: detail,
-        sum: 0,
+        sum: sum,
         paymentId: null,
         customerId: customerId,
         orderStateId: 1,

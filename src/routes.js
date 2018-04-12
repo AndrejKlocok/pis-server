@@ -14,7 +14,7 @@ const RoomController = require('./controllers/RoomController')
 const RoomTypeController = require('./controllers/RoomTypeController')
 
 module.exports = (app) => {
-/* Employee requests */
+/* ----------------   Employee requests   ----------------------- */
   app.post('/employee/listAllCustomers',
     CustomerController.getAllCustomers)
 
@@ -28,8 +28,12 @@ module.exports = (app) => {
   app.post('/employee/login',
     EmployeeController.login)
 
+  /* Menu endpoints */
   app.post('/employee/menuGet',
     MenuController.getAllMenus)
+
+  app.post('/employee/menuItemsGet',
+    MenuController.getItemsMenus)
 
   app.post('/employee/menuChange',
     MenuController.updateMenu)
@@ -49,6 +53,10 @@ module.exports = (app) => {
   app.post('/employee/menuItemDelete',
     ItemController.deleteItem)
 
+  app.post('/employee/ordersCurrent',
+    OrderController.getAllOrdersInTime)
+
+  /* Table endpoints */
   app.post('/employee/tableCustomer',
     TableController.getTableByCustomer)
 
@@ -79,6 +87,15 @@ module.exports = (app) => {
   app.post('/employee/roomDelete',
     RoomController.deleteRoom)
 
+  app.post('/employee/paymentCreate',
+    PaymentController.createPayment)
+
+  app.post('/employee/paymentDelete',
+    PaymentController.deletePayment)
+
+  app.post('/employee/paymentGetAll',
+    PaymentController.getAllPayments)
+
   app.post('/employee/reservationList',
     ReservationController.getAllReservations)
 
@@ -94,12 +111,15 @@ module.exports = (app) => {
   app.post('/employee/reservationDelete',
     ReservationController.deleteReservation)
 
-  /* Customer interface  */
+  /* ----------------------- Customer interface ----------------------- */
+  app.post('/customer/tableView',
+    TableController.getAllTablesInTime)
+
   app.post('/customer/Create',
     CustomerController.createCustomer)
 
-  app.post('/customer/tableView',
-    TableController.getAllTablesInTime)
+  app.post('/customer/leave',
+    OrderController.customerLeave)
 
   app.post('/customer/orderList',
     OrderController.getCustomerOrders)
@@ -116,10 +136,7 @@ module.exports = (app) => {
   app.post('/customer/menu',
     MenuController.getAllMenus)
 
-  app.post('/customer/leave',
-    OrderController.customerLeave)
-
-  /* Manager interface */
+  /* ----------------------- Manager interface ----------------------- */
   app.post('/manager/employeeGet',
     EmployeeController.getAllEmployees)
 

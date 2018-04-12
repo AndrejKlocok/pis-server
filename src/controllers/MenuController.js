@@ -32,6 +32,21 @@ module.exports = {
       })
     }
   },
+  async getItemsMenus (req, res) {
+    try {
+      const {menuId} = req.body
+      const items = await Item.findAll({
+        where: {
+          id: menuId
+        }
+      })
+      res.send(items)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
+  },
   async updateMenu (req, res) {
     try {
       const {id, name, detail, validity} = req.body
