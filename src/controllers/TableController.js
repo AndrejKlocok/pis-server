@@ -1,5 +1,6 @@
 const {Table} = require('../../models')
 const {Customer} = require('../../models')
+const {RoomType} = require('../../models')
 const {Sequelize} = require('../../models')
 const {sequelize} = require('../../models')
 
@@ -35,6 +36,7 @@ module.exports = {
         }
       })
       const table = await Table.findOne({
+        include: RoomType,
         where: {
           id: id
         }
@@ -55,7 +57,7 @@ module.exports = {
         }
       })
       const table = await Table.findAll({
-        // podmienka
+        include: RoomType
       })
       res.send(table)
     } catch (err) {

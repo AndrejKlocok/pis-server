@@ -79,6 +79,21 @@ module.exports = (app) => {
   app.post('/employee/roomDelete',
     RoomController.deleteRoom)
 
+  app.post('/employee/reservationList',
+    ReservationController.getAllReservations)
+
+  app.post('/employee/reservationListGet',
+    ReservationController.updateReservation)
+
+  app.post('/employee/reservationCreate',
+    ReservationController.createReservation)
+
+  app.post('/employee/reservationChange',
+    ReservationController.updateReservation)
+
+  app.post('/employee/reservationDelete',
+    ReservationController.deleteReservation)
+
   /* Customer interface  */
   app.post('/customer/Create',
     CustomerController.createCustomer)
