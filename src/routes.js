@@ -53,8 +53,20 @@ module.exports = (app) => {
   app.post('/employee/menuItemDelete',
     ItemController.deleteItem)
 
+  app.post('/employee/ordersCreate',
+    OrderController.createOrder)
+
   app.post('/employee/ordersCurrent',
     OrderController.getAllOrdersInTime)
+
+  app.post('/employee/ordersAll',
+    OrderController.getAllOrders)
+
+  app.post('/employee/orderChange',
+    OrderController.updateOrder)
+
+  app.post('/employee/orderDelete',
+    OrderController.deleteOrder)
 
   /* Table endpoints */
   app.post('/employee/tableCustomer',
@@ -148,6 +160,18 @@ module.exports = (app) => {
 
   app.post('/manager/employeeDelete',
     EmployeeController.deleteEmployee)
+
+  app.post('/manager/positionsGet',
+    EmployeePositionController.getAllPositions)
+
+  app.post('/manager/positionAdd',
+    EmployeePositionController.createPosition)
+
+  app.post('/manager/positionChange',
+    EmployeePositionController.updatePosition)
+
+  app.post('/manager/positionDelete',
+    EmployeePositionController.deletePositions)
 
   /* Get requests */
 

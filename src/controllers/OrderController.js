@@ -83,6 +83,68 @@ module.exports = {
       })
     }
   },
+  async updateOrder (req, res) {
+    try {
+      const {id, itemId, customerId, name, detail, employeeId} = req.body
+      var sum = 0
+      for (var i = 0, len = itemId.length; i < len; i++) {
+        var itemF = await Item.findOne({ where:
+          { id: itemId[i] }})
+        sum += itemF.price
+        console.log(itemF.price)
+      }
+      var order = await Order.update({
+        name: name,
+        detail: detail,
+        sum: sum,
+        paymentId: null,
+        customerId: customerId,
+        orderStateId: 1,
+        employeeId: employeeId
+      }, {
+        include: [Item],
+        where: {
+          id: id
+        }
+      })
+      order.setItems(itemId)
+      res.send(order)
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        error: 'An error has occured during creating'
+      })
+    }
+  },
+  async deleteOrder (req, res) {
+    try {
+      const {id} = req.body
+      Order.destroy({
+        where: {
+          id: id
+        }
+      })
+      const order = await Order.findAll({
+        // podmienka
+      })
+      res.send(order)
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        error: 'An error has occured during creating'
+      })
+    }
+  },
+  async getAllOrders (req, res) {
+    try {
+      const orders = await Order.findAll()
+      res.send(orders)
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
+  },
   async customerLeave (req, res) {
     try {
       const {customerId} = req.body
