@@ -1,4 +1,5 @@
 const {Customer} = require('../../models')
+const {Table} = require('../../models')
 const {Sequelize} = require('../../models')
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
     try {
       const customer = await Customer.findAll({
         // podmienka
+        include: Table
       })
       res.send(customer)
     } catch (err) {
@@ -35,6 +37,7 @@ module.exports = {
       const {time} = req.body
       const Op = Sequelize.Op
       const customers = await Customer.findAll({
+        include: Table,
         where: Sequelize.and(
           {
             dateIn: {

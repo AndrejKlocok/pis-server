@@ -1,10 +1,11 @@
 // routes to controllers
 const EmployeeController = require('./controllers/EmployeeController')
-const EmployeeControllerPolicy = require('./policies/AuthenticationControllerPolicy')
+// const EmployeeControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 const MenuController = require('./controllers/MenuController')
 const CustomerController = require('./controllers/CustomerController')
 const TableController = require('./controllers/TableController')
 const OrderController = require('./controllers/OrderController')
+const OrderStateController = require('./controllers/OrderStateController')
 const EmployeePositionController = require('./controllers/EmployeePositionController')
 const ItemCategoryController = require('./controllers/ItemCategoryController')
 const ItemController = require('./controllers/ItemController')
@@ -14,16 +15,16 @@ const RoomController = require('./controllers/RoomController')
 const RoomTypeController = require('./controllers/RoomTypeController')
 
 module.exports = (app) => {
-/* Employee requests */
+  /* User Interface */
+  app.post('/user/menu',
+    MenuController.getAllMenus)
+
+  /* Employee requests */
   app.post('/employee/listAllCustomers',
     CustomerController.getAllCustomers)
 
   app.post('/employee/listCustomers',
     CustomerController.getAllCustomersInTime)
-
-  app.post('/employee/register',
-    EmployeeControllerPolicy.register,
-    EmployeeController.register)
 
   app.post('/employee/login',
     EmployeeController.login)
@@ -51,6 +52,30 @@ module.exports = (app) => {
 
   app.post('/employee/tableCustomer',
     TableController.getTableByCustomer)
+
+  app.post('/employee/ordersCreate',
+    OrderController.createOrder)
+
+  app.post('/employee/ordersCurrent',
+    OrderController.getAllOrdersInTime)
+
+  app.post('/employee/ordersAll',
+    OrderController.getAllOrders)
+
+  app.post('/employee/orderChange',
+    OrderController.updateOrder)
+
+  app.post('/employee/orderDelete',
+    OrderController.deleteOrder)
+
+  app.post('/employee/paymentCreate',
+    PaymentController.createPayment)
+
+  app.post('/employee/paymentDelete',
+    PaymentController.deletePayment)
+
+  app.post('/employee/paymentGetAll',
+    PaymentController.getAllPayments)
 
   app.post('/employee/tableCreate',
     TableController.createTable)
@@ -91,6 +116,30 @@ module.exports = (app) => {
   app.post('/employee/reservationDelete',
     ReservationController.deleteReservation)
 
+  app.post('/employee/itemCategoryList',
+    ItemCategoryController.getAllCategories)
+
+  app.post('/employee/itemCategoryCreate',
+    ItemCategoryController.createCategory)
+
+  app.post('/employee/itemCategoryChange',
+    ItemCategoryController.updateCategory)
+
+  app.post('/employee/itemCategoryDelete',
+    ItemCategoryController.deleteCategory)
+
+  app.post('/employee/orderStateList',
+    OrderStateController.getAllStates)
+
+  app.post('/employee/orderStateCreate',
+    OrderStateController.createState)
+
+  app.post('/employee/orderStateChange',
+    OrderStateController.updateState)
+
+  app.post('/employee/orderStateDelete',
+    OrderStateController.deleteState)
+
   /* Customer interface  */
   app.post('/customer/Create',
     CustomerController.createCustomer)
@@ -117,6 +166,18 @@ module.exports = (app) => {
     OrderController.customerLeave)
 
   /* Manager interface */
+  app.post('/manager/positionsGet',
+    EmployeePositionController.getAllPositions)
+
+  app.post('/manager/positionAdd',
+    EmployeePositionController.createPosition)
+
+  app.post('/manager/positionChange',
+    EmployeePositionController.updatePosition)
+
+  app.post('/manager/positionDelete',
+    EmployeePositionController.deletePositions)
+
   app.post('/manager/employeeGet',
     EmployeeController.getAllEmployees)
 
@@ -128,33 +189,4 @@ module.exports = (app) => {
 
   app.post('/manager/employeeDelete',
     EmployeeController.deleteEmployee)
-
-  /* Get requests */
-
-  app.get('/menu',
-    MenuController.getAllMenus)
-
-  app.get('/customer',
-    CustomerController.getAllCustomers)
-
-  app.get('/table',
-    TableController.getAllTables)
-
-  app.get('/position',
-    EmployeePositionController.getAllPositions)
-
-  app.get('/itemCategory',
-    ItemCategoryController.getAllCategories)
-
-  app.get('/payment',
-    PaymentController.getAllPayments)
-
-  app.get('/item',
-    ItemController.getAllItems)
-
-  app.get('/room',
-    RoomController.getAllRoom)
-
-  app.get('/roomType',
-    RoomTypeController.getAllRoomTypes)
 }

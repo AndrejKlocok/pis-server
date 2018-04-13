@@ -10,16 +10,6 @@ function jwSignUser (user) {
 }
 
 module.exports = {
-  async register (req, res) {
-    try {
-      const employee = await Employee.create(req.body)
-      res.send(employee.toJSON)
-    } catch (err) {
-      res.status(400).send({
-        error: 'Wrong fields'
-      })
-    }
-  },
   async login (req, res) {
     try {
       const {email, password} = req.body
