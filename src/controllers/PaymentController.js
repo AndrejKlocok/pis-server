@@ -17,13 +17,16 @@ module.exports = {
         createdAt: new Date()
       })
 
-      order.paymentId = payment.id
-      await Order.update(order,
-        {
-          where: {
-            id: payment.id
-          }
-        })
+      await Order.update({
+        sum: order.sum,
+        paymentId: payment.id,
+        orderStateId: 4,
+        employeeId: employeeId
+      }, {
+        where: {
+          id: orderId
+        }
+      })
       res.send(payment)
     } catch (err) {
       console.log(err)
