@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     Payment.belongsTo(models.Employee, {
-      foreignKey: 'itemCategoryId',
+      foreignKey: 'employeeId',
       targetKey: 'id'
     })
   }

@@ -2,7 +2,6 @@ const {Order} = require('../../models')
 const {Item} = require('../../models')
 const {Customer} = require('../../models')
 const {OrderState} = require('../../models')
-const {Employee} = require('../../models')
 const {Payment} = require('../../models')
 const {Sequelize} = require('../../models')
 
@@ -66,9 +65,6 @@ module.exports = {
         },
         {
           model: Payment
-        },
-        {
-          model: Employee
         }],
         where: {
           id: orderId
@@ -78,6 +74,7 @@ module.exports = {
       console.log(order)
       res.send(order)
     } catch (err) {
+      console.log(err)
       res.status(500).send({
         error: 'An error has occured during fetch'
       })
