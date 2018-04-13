@@ -1,16 +1,18 @@
 const {Reservation} = require('../../models')
 const {Employee} = require('../../models')
 const {Table} = require('../../models')
+const {Sequelize} = require('../../models')
 
 module.exports = {
   async createReservation (req, res) {
     try {
-      const { name, detail, date, contract, employeeId, tableId } = req.body
+      const { name, detail, dateStart, dateEnd, contact, employeeId, tableId } = req.body
       const reservation = await Reservation.create({
         name: name,
         detail: detail,
-        date: date,
-        contract: contract,
+        dateStart: dateStart,
+        dateEnd: dateEnd,
+        contact: contact,
         employeeId: employeeId,
         tableId: tableId
       })
@@ -24,12 +26,13 @@ module.exports = {
   },
   async updateReservation (req, res) {
     try {
-      const { id, name, detail, date, contract, employeeId, tableId } = req.body
+      const { id, name, detail, dateStart, dateEnd, contract, employeeId, tableId } = req.body
 
       await Reservation.update({
         name: name,
         detail: detail,
-        date: date,
+        dateStart: dateStart,
+        dateEnd: dateEnd,
         contract: contract,
         employeeId: employeeId,
         tableId: tableId,
@@ -81,33 +84,50 @@ module.exports = {
       })
     }
   },
-  async getAllReservations (req, res) {
-    try {
-      const reservation = await Reservation.findAll({
-        include: [{
-          model: Employee
-        },
-        {
-          model: Table
-        }]
-      })
-      res.send(reservation)
-    } catch (err) {
-      res.status(500).send({
-        error: 'An error has occured during fetch'
-      })
-    }
-  },
   async getReservationsById (req, res) {
     try {
-      const { tableId, time } = req.body
-      var whereStatement = {}
+      const { tableId, dateStart, dateEnd } = req.body
+      var whereStatement
+      const Op = Sequelize.Op
 
-      if (tableId) {
-        whereStatement.tableId = tableId
-      }
-      if (time) {
-        whereStatement.time = time.setHours(0, 0, 0, 0)
+      if (tableId && dateStart && dateEnd) {
+        // vsetky rezervacie v dany cas nad stolom tableId
+        whereStatement = Sequelize.and(
+          Sequelize.or(
+            {
+              dateStart: {
+                [Op.between]: [ dateStart, dateEnd ]
+              }
+            },
+            {
+              dateEnd: {
+                [Op.between]: [ dateStart, dateEnd ]
+              }
+            }
+          ),
+          {
+            tableId: tableId
+          }
+        )
+      } else if (tableId) {
+        // vsetky rezervacie s tableId
+        whereStatement = {
+          tableId: tableId
+        }
+      } else if (dateStart && dateEnd) {
+        // vsetky rezervacie v dany cas
+        whereStatement = Sequelize.or(
+          {
+            dateStart: {
+              [Op.between]: [ dateStart, dateEnd ]
+            }
+          },
+          {
+            dateEnd: {
+              [Op.between]: [ dateStart, dateEnd ]
+            }
+          }
+        )
       }
       const reservation = await Reservation.findAll({
         include: [{
