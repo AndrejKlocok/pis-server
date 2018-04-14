@@ -26,14 +26,14 @@ module.exports = {
   },
   async updateReservation (req, res) {
     try {
-      const { id, name, detail, dateStart, dateEnd, contract, employeeId, tableId } = req.body
+      const { id, name, detail, dateStart, dateEnd, contact, employeeId, tableId } = req.body
 
       await Reservation.update({
         name: name,
         detail: detail,
         dateStart: dateStart,
         dateEnd: dateEnd,
-        contract: contract,
+        contact: contact,
         employeeId: employeeId,
         tableId: tableId,
         updatedAt: new Date()
