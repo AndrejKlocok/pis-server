@@ -1,6 +1,7 @@
 const {Table} = require('../../models')
 const {Customer} = require('../../models')
 const {RoomType} = require('../../models')
+const {Room} = require('../../models')
 const {Sequelize} = require('../../models')
 const {sequelize} = require('../../models')
 
@@ -82,16 +83,18 @@ module.exports = {
   async getAllTablesInTime (req, res) {
     try {
       const {time} = req.body
+      console.log(time)
+
       const Op = Sequelize.Op
       const table = await Table.findAll({
-        attributes: ['id', 'name', 'seatCount', 'roomId'],
+        attributes: ['id', 'name', 'seatCount', 'roomId', [sequelize.fn('count', sequelize.col('Customers.id')), 'customersCount']],
         include: [{
           model: Customer,
-          attributes: [[sequelize.fn('count', sequelize.col('Customers.id')), 'customersCount']],
+          attributes: [],
           where: Sequelize.and(
             {
               dateIn: {
-                [Op.lt]: time
+                [Op.lte]: time
               }
             },
             Sequelize.or(
@@ -100,12 +103,16 @@ module.exports = {
               },
               {
                 dateOut: {
-                  [Op.gt]: time
+                  [Op.gte]: time
                 }
               }
             )
           ),
           required: false
+        },
+        {
+          model: Room,
+          attributes: ['name']
         }],
         group: ['Table.id'],
         required: false
