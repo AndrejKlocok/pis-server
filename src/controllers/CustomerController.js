@@ -62,5 +62,21 @@ module.exports = {
         error: 'An error has occured during fetch'
       })
     }
+  },
+  async customerLeave (req, res) {
+    const {customerId} = req.body
+    try {
+      Customer.update({
+        dateOut: new Date()}, {
+        where: {
+          id: customerId
+        }
+      })
+      res.send('success')
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
   }
 }

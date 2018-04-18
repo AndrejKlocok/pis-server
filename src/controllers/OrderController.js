@@ -142,7 +142,7 @@ module.exports = {
       })
     }
   },
-  async customerLeave (req, res) {
+  async getNotPaidOrders (req, res) {
     try {
       const {customerId} = req.body
       const orders = await Order.findAll({
@@ -151,16 +151,6 @@ module.exports = {
           paymentId: null
         }
       })
-      if (orders.length === 0) {
-        Customer.update({
-          dateOut: new Date()}, {
-          where: {
-            id: customerId
-          }
-        }).error(err => {
-          console.log(err)
-        })
-      }
       res.send(orders)
     } catch (err) {
       res.status(500).send({

@@ -153,6 +153,9 @@ module.exports = (app) => {
   app.post('/customer/ordersCurrent',
     OrderController.getAllOrdersInTime)
 
+  app.post('/customer/ordersNotPaid',
+    OrderController.getNotPaidOrders)
+
   app.post('/customer/orderAdd',
     OrderController.createOrder)
 
@@ -163,7 +166,7 @@ module.exports = (app) => {
     MenuController.getAllMenus)
 
   app.post('/customer/leave',
-    OrderController.customerLeave)
+    CustomerController.customerLeave)
 
   /* Manager interface */
   app.post('/manager/positionsGet',
