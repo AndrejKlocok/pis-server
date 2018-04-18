@@ -119,7 +119,7 @@ module.exports = {
         id: 9,
         name: 'Minerálka',
         price: 30,
-        detail: 'Je to cola',
+        detail: '',
         allergens: '',
         grammage: null,
         volume: 0.3,
