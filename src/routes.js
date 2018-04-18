@@ -143,6 +143,9 @@ module.exports = (app) => {
   app.post('/employee/assignRequest',
     RequestController.assignRequest)
 
+  app.post('/employee/requestList',
+    RequestController.getAllRequest)
+
   /* Customer interface  */
   app.post('/customer/Create',
     CustomerController.createCustomer)
