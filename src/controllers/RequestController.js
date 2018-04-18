@@ -1,4 +1,6 @@
 const {Request} = require('../../models')
+const {Customer} = require('../../models')
+const {Table} = require('../../models')
 
 module.exports = {
   async createRequest (req, res) {
@@ -24,8 +26,10 @@ module.exports = {
         }
       })
       const request = await Request.findAll({
-        // podmienka
-      })
+        include: [{
+          model: Customer,
+          include: Table
+        }]})
       res.send(request)
     } catch (err) {
       res.status(500).send({
@@ -36,8 +40,11 @@ module.exports = {
   async getAllRequest (req, res) {
     try {
       const request = await Request.findAll({
-        // podmienka
-      })
+        include: [{
+          model: Customer,
+          include: Table
+        }]})
+
       res.send(request)
     } catch (err) {
       res.status(500).send({
