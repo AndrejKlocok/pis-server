@@ -1,6 +1,5 @@
 // routes to controllers
 const EmployeeController = require('./controllers/EmployeeController')
-// const EmployeeControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 const MenuController = require('./controllers/MenuController')
 const CustomerController = require('./controllers/CustomerController')
 const TableController = require('./controllers/TableController')
@@ -13,6 +12,7 @@ const PaymentController = require('./controllers/PaymentController')
 const ReservationController = require('./controllers/ReservationController')
 const RoomController = require('./controllers/RoomController')
 const RoomTypeController = require('./controllers/RoomTypeController')
+const RequestController = require('./controllers/RequestController')
 
 module.exports = (app) => {
   /* User Interface */
@@ -140,6 +140,9 @@ module.exports = (app) => {
   app.post('/employee/orderStateDelete',
     OrderStateController.deleteState)
 
+  app.post('/employee/assignRequest',
+    RequestController.assignRequest)
+
   /* Customer interface  */
   app.post('/customer/Create',
     CustomerController.createCustomer)
@@ -167,6 +170,9 @@ module.exports = (app) => {
 
   app.post('/customer/leave',
     CustomerController.customerLeave)
+
+  app.post('/customer/callEmployee',
+    RequestController.createRequest)
 
   /* Manager interface */
   app.post('/manager/positionsGet',

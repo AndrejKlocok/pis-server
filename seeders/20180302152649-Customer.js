@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Customers', [
       {
         id: 1,
-        name: 'Jano',
+        name: 'customer',
         dateIn: new Date(),
         dateOut: null,
         tableId: 1,
@@ -14,7 +14,7 @@ module.exports = {
       },
       {
         id: 2,
-        name: 'Jana',
+        name: 'customer',
         dateIn: new Date(),
         dateOut: null,
         tableId: 1,
