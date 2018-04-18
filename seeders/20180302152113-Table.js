@@ -6,28 +6,49 @@ module.exports = {
       {
         id: 1,
         name: 'Stol',
-        seatCount: 6,
+        seatCount: 4,
         roomId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
         id: 2,
         name: 'Stol',
-        seatCount: 6,
+        seatCount: 4,
         roomId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
         id: 3,
         name: 'Stol',
-        seatCount: 6,
+        seatCount: 4,
         roomId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
         id: 4,
         name: 'Stol',
-        seatCount: 6,
+        seatCount: 4,
+        roomId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }, {
+        id: 5,
+        name: 'Stol',
+        seatCount: 4,
+        roomId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }, {
+        id: 6,
+        name: 'Stol',
+        seatCount: 8,
+        roomId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }, {
+        id: 7,
+        name: 'Stol',
+        seatCount: 8,
         roomId: 1,
         createdAt: new Date(),
         updatedAt: new Date()

@@ -23,6 +23,22 @@ module.exports = {
         name: 'Nealkoholicky napoj',
         createdAt: new Date(),
         updatedAt: new Date()
+      }, {
+        id: 5,
+        name: 'Šalát',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }, {
+        id: 6,
+        name: 'Sója',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 7,
+        name: 'Pochutiny',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ])
   },

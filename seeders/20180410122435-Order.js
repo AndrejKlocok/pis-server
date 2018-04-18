@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Orders', [
       {
         id: 1,
-        name: 'Pre Jana',
+        name: 'special',
         detail: ' ',
         sum: 0,
         paymentId: 1,
@@ -17,7 +17,7 @@ module.exports = {
       },
       {
         id: 2,
-        name: 'Pre Janu',
+        name: 'special',
         detail: ' ',
         sum: 0,
         paymentId: null,
