@@ -1,5 +1,7 @@
 const {Customer} = require('../../models')
 const {Table} = require('../../models')
+const {Order} = require('../../models')
+const {Item} = require('../../models')
 const {Sequelize} = require('../../models')
 
 module.exports = {
@@ -73,6 +75,28 @@ module.exports = {
         }
       })
       res.send('success')
+    } catch (err) {
+      res.status(500).send({
+        error: 'An error has occured during fetch'
+      })
+    }
+  },
+  async getCustomersByTableId (req, res) {
+    try {
+      const {tableId} = req.body
+      const customers = await Customer.findAll({
+        include: [{
+          model: Order,
+          include: [{
+            model: Item}, {
+            model: Customer
+          }]
+        }],
+        where: {
+          tableId: tableId
+        }
+      })
+      res.send(customers)
     } catch (err) {
       res.status(500).send({
         error: 'An error has occured during fetch'

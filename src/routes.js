@@ -53,6 +53,9 @@ module.exports = (app) => {
   app.post('/employee/tableCustomer',
     TableController.getTableByCustomer)
 
+  app.post('/employee/customersOfTable',
+    CustomerController.getCustomersByTableId)
+
   app.post('/employee/ordersCreate',
     OrderController.createOrder)
 
