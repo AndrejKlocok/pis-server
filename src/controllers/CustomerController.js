@@ -68,7 +68,7 @@ module.exports = {
   async customerLeave (req, res) {
     const {customerId} = req.body
     try {
-      Customer.update({
+      await Customer.update({
         dateOut: new Date()}, {
         where: {
           id: customerId
