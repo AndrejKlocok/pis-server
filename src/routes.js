@@ -153,7 +153,7 @@ module.exports = (app) => {
     RequestController.getAllRequest)
 
   /* Customer interface  */
-  app.post('/customer/Create',
+  app.post('/customer/create',
     CustomerController.createCustomer)
 
   app.get('/customer/table',

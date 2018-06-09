@@ -1,1221 +1,722 @@
-{
-    "swagger": "2.0",
-    "info": {
-      "description": "PROJEKT PIS",
-      "version": "1.0.0",
-      "title": "PROJEKT PIS API"
-    },
-    "host": "pis.borntolive.cz",
-    "tags": [
-      {
-        "name": "customer",
-        "description": "Zakaznici v restauracii za stolom"
-      },
-      {
-        "name": "user",
-        "description": "Uzivatelia, ktory si prezeraju obsadenost restauracie, menu, vytvaraju rezervacie"
-      },
-      {
-        "name": "employee",
-        "description": "Zamestnanci mozu spravovat zakaznikov/uzivatelov, upravuju menu a ine"
-      },
-      {
-        "name": "manager",
-        "description": "Manazeri spravuju zamestnancov, nic ine"
-      }
-    ],
-    "paths": {
-      "/customer/tableView": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Ziska informacie o stoloch a ich obsadenost pre cas",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "time",
-              "description": "Cas pre zobrazenie stolov",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "tables: [{id, name, seatCount, free}]"
-            }
-          }
-        }
-      },
-      "/customer/customerCreate": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Vytvori noveho zakaznika",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "tableId",
-              "description": "ID stolu na ktorom sedi zakaznik",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "customer: { id, name, date, tableId, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/customer/leave": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Zaznamena odchod zakaznika",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "customerId",
-              "description": "ID zakaznika",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "resolved"
-            }
-          }
-        }
-      },
-      "/customer/orderList": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Zobrazi vsetky objednavky zakaznika",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "customerId",
-              "description": "ID zakaznika",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "orders: {}"
-            }
-          }
-        }
-      },
-      "/customer/orderAdd": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Vytvorie novej objednavky",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "Zoznam poloziek, id zakaznika",
-              "description": "Array ID of Items, ID zakaznika",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "orderId"
-            }
-          }
-        }
-      },
-      "/customer/orderInfo": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Nacita informacie o objednavke",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "orderID",
-              "description": "ID objednavky",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "order"
-            }
-          }
-        }
-      },
-      "/customer/ordersNotPaid": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Nacita nezaplatene objednavky",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "customerId",
-              "description": "ID zakaznika",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "order"
-            }
-          }
-        }
-      },
-      "/customer/menu": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Zobrazi dostupne menu aj s polozkami",
-          "responses": {
-            "200": {
-              "description": "menus: [{id, name, detail, items}]]- items: [{id, name, price, detail, allergens, grammage, volume, alcohol, itemCategoryName, menuId}]"
-            }
-          }
-        }
-      },
-      "/customer/callEmployee": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Zavola casnika",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "customerId, detail",
-              "description": "zakaznik, informacie",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Uspech"
-            }
-          }
-        }
-      },
-      "/customer/payment": {
-        "post": {
-          "tags": [
-            "customer"
-          ],
-          "summary": "Vyvola ziadost o platbu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "orderId, customerId",
-              "description": "Zozname objednavok zakaznika",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Cena pre platbu"
-            }
-          }
-        }
-      },
-      "/user/menuGet": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Zobrazi dostupne menu pre time",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "time",
-              "description": "Cas pre ziskanie menu",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "menus: [{id, name, detail}]]"
-            }
-          }
-        }
-      },
-      "/user/menuItemsGet": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Zobrazi polozky menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "menuId",
-              "description": "Pre menuId 0 ziska pre vsetky aktualne menu",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "menuItems: [{id, name, price, detail, allergens, grammage, volume, alcohol, itemCategoryName, menuId}]"
-            }
-          }
-        }
-      },
-      "/employee/listCustomers": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi aktualnych zakaznikov restauracie",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "time",
-              "description": "cas \"2018-04-13T19:43:20.000Z\"",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/listAllCustomers": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi vsetkych zakaznikov restauracie, aj v historii",
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/login": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Prihlasenie zamestnanca",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "email, password",
-              "description": "Meno, nick, prezivka",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/orderCreate": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Vytvori objednavku v databaze",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "order",
-              "description": "{[itemId], customerId, name, detail, employeeId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/ordersCurrent": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi aktualne objednavky zakaznikov v restauracii",
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/ordersAll": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi vsetky objednavky",
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/orderChange": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zmeni objednavku v databaze",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "order",
-              "description": "{id, itemId, customerId, name, detail, employeeId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/orderDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi aktualne objednavky zakaznikov v restauracii",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "id",
-              "description": "{id}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/menuGet": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi dostupne menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "time",
-              "description": "Cas pre ziskanie menu",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "list of menu: [{id, name, detail}]]"
-            }
-          }
-        }
-      },
-      "/employee/menuItemsGet": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi polozky menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "menuId",
-              "description": "Pre menuId 0 ziska pre vsetky aktualne menu",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "[{id, name, price, detail, allergens, grammage, volume, alcohol, itemCategoryName, menuId}]"
-            }
-          }
-        }
-      },
-      "/employee/menuAdd": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Vytvori nove menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "menu",
-              "description": "{name, detail, validity}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "menuId"
-            }
-          }
-        }
-      },
-      "/employee/menuDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Odstrani menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "menuId",
-              "description": "menuId",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/employee/menuItemChange": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Upravy polozku v menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "item",
-              "description": "{id, name, price, detail, allergens, grammage, volume, alcohol, itemCategoryId, menuId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "menuItems: item"
-            }
-          }
-        }
-      },
-      "/employee/menuItemAdd": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Prida polozky menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "item",
-              "description": "{id, name, price, detail, allergens, grammage, volume, alcohol, itemCategoryId, menuId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/employee/menuItemDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Zobrazi polozky menu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "itemId",
-              "description": "itemId",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/employee/tableCustomer": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Ziskanie stolu zakaznika",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "customerId",
-              "description": "ID zakaznika",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "tableId"
-            }
-          }
-        }
-      },
-      "/employee/tableCreate": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Vytvorenie noveho stolu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "table",
-              "description": "{name, seatCount, roomId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "table - object"
-            }
-          }
-        }
-      },
-      "/employee/tableChange": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Uprava stolu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "table",
-              "description": "{id, name, seatCount, roomId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "table - object"
-            }
-          }
-        }
-      },
-      "/employee/tableDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Odstranenie stolu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "tableId",
-              "description": "tableId",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Zoznam stolov"
-            }
-          }
-        }
-      },
-      "/employee/paymentCreate": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Nastavenie platby na objednavku",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "orderId, employeeId",
-              "description": "ID objednavky",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "payment {id, date, sum, detail, employee}"
-            }
-          }
-        }
-      },
-      "/employee/paymentDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Nastavenie platby na objednavku",
-          "responses": {
-            "200": {
-              "description": "payment {id, date, sum, detail, employee}"
-            }
-          }
-        }
-      },
-      "/employee/paymentGetAll": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Ziska vsetky platby",
-          "responses": {
-            "200": {
-              "description": "payment {id, date, sum, detail, employee}"
-            }
-          }
-        }
-      },
-      "/employee/reservationList": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Ziska zoznam rezervacii",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "tableId",
-              "description": "ID stolu pre rezervaciu",
-              "schema": {
-                "$ref": "#/definitions/Reservation"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "reservation {id, name, detail, dateStart, dateEnd, contact, employeeId, tableId, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/employee/reservationCreate": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Ziska zoznam rezervacii",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "rezervacia",
-              "description": "{name, detail, dateStart, dateEnd, contact, employeeId, tableId, createdAt, updatedAt}",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "reservation {id, name, detail, dateStart, dateEnd, contact, employeeId, tableId, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/employee/reservationChange": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Upravy rezervaciu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "rezervacia",
-              "description": "{name, detail, dateStart, dateEnd, contact, employeeId, tableId, createdAt, updatedAt}",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "reservation {id, name, detail, dateStart, dateEnd, contact, employeeId, tableId, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/employee/reservationDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Vymaze rezervaciu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "id",
-              "description": "id",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/itemCategoryList": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Ziska zozname kategorii",
-          "responses": {
-            "200": {
-              "description": "itemCategory {id, name, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/employee/itemCategoryCreate": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Vytvori",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "itemCategory",
-              "description": "{name}",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "itemCategory {id, name, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/employee/itemCategoryChange": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Upravy",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "rezervacia",
-              "description": "itemCategory {id, name}",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "itemCategory {id, name, createdAt, updatedAt}}"
-            }
-          }
-        }
-      },
-      "/employee/itemCategoryDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Odstrani",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "id",
-              "description": "id",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/employee/orderStateList": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Ziska",
-          "responses": {
-            "200": {
-              "description": "orderState {id, name, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/employee/orderStateCreate": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Vytvori",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "itemCategory",
-              "description": "{name}",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "orderState {id, name, createdAt, updatedAt}"
-            }
-          }
-        }
-      },
-      "/employee/orderStateChange": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Upravy",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "rezervacia",
-              "description": "orderState {id, name}",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "orderState {id, name, createdAt, updatedAt}}"
-            }
-          }
-        }
-      },
-      "/employee/orderStateDelete": {
-        "post": {
-          "tags": [
-            "employee"
-          ],
-          "summary": "Odstrani",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "id",
-              "description": "id",
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
-      "/manager/employeeGet": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Zobrazi zamestnancov",
-          "responses": {
-            "200": {
-              "description": "{id, name, surname, password, email, employeePositionId}"
-            }
-          }
-        }
-      },
-      "/manager/employeeAdd": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Prida noveho zamestnanca",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "employee",
-              "description": "{id, name, surname, password, email, employeePositionId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/manager/employeeChange": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Upravy zamestnanca",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "employee",
-              "description": "{id, name, surname, password, email, employeePositionId}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "employee"
-            }
-          }
-        }
-      },
-      "/manager/employeeDelete": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Odstrani zamestnanca",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "employeeId",
-              "description": "employeeId",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/manager/positionGet": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Zobrazi vsetky pozicie",
-          "responses": {
-            "200": {
-              "description": "{id, name, detail}"
-            }
-          }
-        }
-      },
-      "/manager/positionAdd": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Prida novu poziciu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "pozicia",
-              "description": "{name, detail}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/manager/positionChange": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Upravy poziciu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "pozicia",
-              "description": "{id, name, detail}",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "employee"
-            }
-          }
-        }
-      },
-      "/manager/positionDelete": {
-        "post": {
-          "tags": [
-            "manager"
-          ],
-          "summary": "Odstrani poziciu",
-          "parameters": [
-            {
-              "in": "body",
-              "name": "id",
-              "description": "employeeId",
-              "required": true,
-              "schema": {
-                "$ref": ""
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      }
-    },
-    "definitions": {
-      "Reservation": {
-        "type": "object",
-        "properties": {
-          "tableId": {
-            "type": "string"
-          },
-          "dateStart": {
-            "type": "string"
-          },
-          "dateEnd": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  }
+swagger: '2.0'
+info:
+  description: PROJEKT PIS
+  version: 1.0.0
+  title: PROJEKT PIS API
+tags:
+  - name: customer
+    description: Zakaznici v restauracii za stolom
+  - name: user
+    description: >-
+      Uzivatelia, ktory si prezeraju obsadenost restauracie, menu, vytvaraju
+      rezervacie
+  - name: employee
+    description: 'Zamestnanci mozu spravovat zakaznikov/uzivatelov, upravuju menu a ine'
+  - name: manager
+    description: 'Manazeri spravuju zamestnancov, nic ine'
+paths:
+  /customer/table:
+    get:
+      tags:
+        - customer
+      summary: Ziska informacie o stoloch a ich obsadenost pre cas
+      parameters:
+        - name: time
+          in: query
+          description: Cas pre zobrazenie stolov
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 'tables: [{id, name, seatCount, free}]'
+  /customer/create:
+    post:
+      tags:
+        - customer
+      summary: Vytvori noveho zakaznika
+      parameters:
+        - in: body
+          name: tableId
+          description: ID stolu na ktorom sedi zakaznik
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: 'customer: { id, name, date, tableId, createdAt, updatedAt}'
+  /customer/leave:
+    put:
+      tags:
+        - customer
+      summary: Zaznamena odchod zakaznika
+      parameters:
+        - in: body
+          name: customerId
+          description: ID zakaznika
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: resolved
+  /customer/order:
+    get:
+      tags:
+        - customer
+      summary: Zobrazi vsetky objednavky zakaznika
+      parameters:
+        - in: query
+          type: integer
+          name: customerId
+          description: ID zakaznika
+          required: true
+      responses:
+        '200':
+          description: 'orders: {}'
+
+    post:
+      tags:
+        - customer
+      summary: Vytvorie novej objednavky
+      parameters:
+        - in: body
+          name: 'Zoznam poloziek, id zakaznika'
+          description: 'Array ID of Items, ID zakaznika'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: orderId
+  /customer/orderById:
+    get:
+      tags:
+        - customer
+      summary: Nacita informacie o objednavke
+      parameters:
+        - in: query
+          type: integer
+          name: orderID
+          description: ID objednavky
+          required: true
+      responses:
+        '200':
+          description: order
+  /customer/ordersNotPaid:
+    get:
+      tags:
+        - customer
+      summary: Nacita nezaplatene objednavky
+      parameters:
+        - in: query
+          name: customerId
+          type: integer
+          description: ID zakaznika
+          required: true
+      responses:
+        '200':
+          description: order
+  /customer/menu:
+    get:
+      tags:
+        - customer
+      summary: Zobrazi dostupne menu aj s polozkami
+      responses:
+        '200':
+          description: >-
+            menus: [{id, name, detail, items}]]- items: [{id, name, price,
+            detail, allergens, grammage, volume, alcohol, itemCategoryName,
+            menuId}]
+  /customer/callEmployee:
+    post:
+      tags:
+        - customer
+      summary: Zavola casnika
+      parameters:
+        - in: body
+          name: 'customerId, detail'
+          description: 'zakaznik, informacie'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: Uspech
+
+  /user/menu:
+    get:
+      tags:
+        - user
+      summary: Zobrazi dostupne menu pre time
+      parameters:
+        - in: query
+          type: string
+          name: time
+          description: Cas pre ziskanie menu
+          required: true
+
+      responses:
+        '200':
+          description: 'menus: [{id, name, detail}]]'
+
+  /employee/customers:
+    get:
+      tags:
+        - employee
+      summary: Zobrazi aktualnych zakaznikov restauracie
+      parameters:
+        - in: query
+          name: time
+          type: string
+          description: 'cas "2018-04-13T19:43:20.000Z"'
+          required: true
+
+      responses:
+        '200':
+          description: ''
+
+  /employee/login:
+    post:
+      tags:
+        - employee
+      summary: Prihlasenie zamestnanca
+      parameters:
+        - in: body
+          name: 'email, password'
+          description: 'Meno, nick, prezivka'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: ''
+  /employee/menu:
+    get:
+      tags:
+        - employee
+      summary: Zobrazi dostupne menu
+      parameters:
+        - in: query
+          name: time
+          description: Cas pre ziskanie menu
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 'list of menu: [{id, name, detail}]]'
+
+    post:
+      tags:
+        - employee
+      summary: Vytvori nove menu
+      parameters:
+        - in: body
+          name: menu
+          description: '{name, detail, validity}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: menuId
+    delete:
+      tags:
+        - employee
+      summary: Odstrani menu
+      parameters:
+        - in: body
+          name: menuId
+          description: menuId
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: success
+  /employee/menuItem:
+    get:
+      tags:
+        - employee
+      summary: Zobrazi polozky menu
+      parameters:
+        - in: query
+          name: menuId
+          description: Pre menuId 0 ziska pre vsetky aktualne menu
+          required: true
+          type: string
+      responses:
+        '200':
+          description: >-
+            [{id, name, price, detail, allergens, grammage, volume, alcohol,
+            itemCategoryName, menuId}]
+    post:
+      tags:
+        - employee
+      summary: Upravy polozku v menu
+      parameters:
+        - in: body
+          name: item
+          description: >-
+            {id, name, price, detail, allergens, grammage, volume, alcohol,
+            itemCategoryId, menuId}
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: 'menuItems: item'
+    put:
+      tags:
+        - employee
+      summary: Prida polozky menu
+      parameters:
+        - in: body
+          name: item
+          description: >-
+            {id, name, price, detail, allergens, grammage, volume, alcohol,
+            itemCategoryId, menuId}
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: success
+
+    delete:
+      tags:
+        - employee
+      summary: Zobrazi polozky menu
+      parameters:
+        - in: body
+          name: itemId
+          description: itemId
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: success
+          
+  /employee/order:
+    post:
+      tags:
+        - employee
+      summary: Vytvori objednavku v databaze
+      parameters:
+        - in: body
+          name: order
+          description: '{[itemId], customerId, name, detail, employeeId}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: ''
+    get:
+      tags:
+        - employee
+      summary: Zobrazi vsetky objednavky
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - employee
+      summary: Zmeni objednavku v databaze
+      parameters:
+        - in: body
+          name: order
+          description: '{id, itemId, customerId, name, detail, employeeId}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - employee
+      summary: Zobrazi aktualne objednavky zakaznikov v restauracii
+      parameters:
+        - in: body
+          name: id
+          description: '{id}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: ''
+  /employee/orderInTime:
+    get:
+      tags:
+        - employee
+      summary: Zobrazi aktualne objednavky zakaznikov v restauracii
+      responses:
+        '200':
+          description: ''
+
+  /employee/tableCustomer:
+    get:
+      tags:
+        - employee
+      summary: Ziskanie stolu zakaznika
+      parameters:
+        - in: query
+          type: integer
+          name: customerId
+          description: ID zakaznika
+          required: true
+      responses:
+        '200':
+          description: tableId
+  /employee/table:
+    get:
+      tags:
+        - employee
+      summary: Zobrazi vsetky stoly
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - employee
+      summary: Vytvorenie noveho stolu
+      parameters:
+        - in: body
+          name: table
+          description: '{name, seatCount, roomId}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: table - object
+    put:
+      tags:
+        - employee
+      summary: Uprava stolu
+      parameters:
+        - in: body
+          name: table
+          description: '{id, name, seatCount, roomId}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: table - object
+
+    delete:
+      tags:
+        - employee
+      summary: Odstranenie stolu
+      parameters:
+        - in: body
+          name: tableId
+          description: tableId
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: Zoznam stolov
+  /employee/payment:
+    post:
+      tags:
+        - employee
+      summary: Nastavenie platby na objednavku
+      parameters:
+        - in: body
+          name: 'orderId, employeeId'
+          description: ID objednavky
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: 'payment {id, date, sum, detail, employee}'
+    delete:
+      tags:
+        - employee
+      summary: Nastavenie platby na objednavku
+      responses:
+        '200':
+          description: 'payment {id, date, sum, detail, employee}'
+    get:
+      tags:
+        - employee
+      summary: Ziska vsetky platby
+      responses:
+        '200':
+          description: 'payment {id, date, sum, detail, employee}'
+          
+  /employee/reservation:
+    get:
+      tags:
+        - employee
+      summary: Ziska zoznam rezervacii
+      parameters:
+        - in: query
+          name: tableId
+          type: integer
+          description: ID stolu pre rezervaciu
+      responses:
+        '200':
+          description: >-
+            reservation {id, name, detail, dateStart, dateEnd, contact,
+            employeeId, tableId, createdAt, updatedAt}
+    post:
+      tags:
+        - employee
+      summary: Ziska zoznam rezervacii
+      parameters:
+        - in: body
+          name: rezervacia
+          description: >-
+            {name, detail, dateStart, dateEnd, contact, employeeId, tableId,
+            createdAt, updatedAt}
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: >-
+            reservation {id, name, detail, dateStart, dateEnd, contact,
+            employeeId, tableId, createdAt, updatedAt}
+    put:
+      tags:
+        - employee
+      summary: Upravy rezervaciu
+      parameters:
+        - in: body
+          name: rezervacia
+          description: >-
+            {name, detail, dateStart, dateEnd, contact, employeeId, tableId,
+            createdAt, updatedAt}
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: >-
+            reservation {id, name, detail, dateStart, dateEnd, contact,
+            employeeId, tableId, createdAt, updatedAt}
+    delete:
+      tags:
+        - employee
+      summary: Vymaze rezervaciu
+      parameters:
+        - in: body
+          name: id
+          description: id
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: ''
+  /employee/itemCategory:
+    get:
+      tags:
+        - employee
+      summary: Ziska zozname kategorii
+      responses:
+        '200':
+          description: 'itemCategory {id, name, createdAt, updatedAt}'
+    post:
+      tags:
+        - employee
+      summary: Vytvori
+      parameters:
+        - in: body
+          name: itemCategory
+          description: '{name}'
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: 'itemCategory {id, name, createdAt, updatedAt}'
+    put:
+      tags:
+        - employee
+      summary: Upravy
+      parameters:
+        - in: body
+          name: rezervacia
+          description: 'itemCategory {id, name}'
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: 'itemCategory {id, name, createdAt, updatedAt}}'
+
+    delete:
+      tags:
+        - employee
+      summary: Odstrani
+      parameters:
+        - in: body
+          name: id
+          description: id
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: ''
+  /employee/orderState:
+    get:
+      tags:
+        - employee
+      summary: Ziska
+      responses:
+        '200':
+          description: 'orderState {id, name, createdAt, updatedAt}'
+
+    post:
+      tags:
+        - employee
+      summary: Vytvori
+      parameters:
+        - in: body
+          name: itemCategory
+          description: '{name}'
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: 'orderState {id, name, createdAt, updatedAt}'
+    put:
+      tags:
+        - employee
+      summary: Upravy
+      parameters:
+        - in: body
+          name: rezervacia
+          description: 'orderState {id, name}'
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: 'orderState {id, name, createdAt, updatedAt}}'
+    delete:
+      tags:
+        - employee
+      summary: Odstrani
+      parameters:
+        - in: body
+          name: id
+          description: id
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: ''
+  /manager/employee:
+    get:
+      tags:
+        - manager
+      summary: Zobrazi zamestnancov
+      responses:
+        '200':
+          description: '{id, name, surname, password, email, employeePositionId}'
+    post:
+      tags:
+        - manager
+      summary: Prida noveho zamestnanca
+      parameters:
+        - in: body
+          name: employee
+          description: '{id, name, surname, password, email, employeePositionId}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: success
+    put:
+      tags:
+        - manager
+      summary: Upravy zamestnanca
+      parameters:
+        - in: body
+          name: employee
+          description: '{id, name, surname, password, email, employeePositionId}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: employee
+    delete:
+      tags:
+        - manager
+      summary: Odstrani zamestnanca
+      parameters:
+        - in: body
+          name: employeeId
+          description: employeeId
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: success
+  /manager/position:
+    get:
+      tags:
+        - manager
+      summary: Zobrazi vsetky pozicie
+      responses:
+        '200':
+          description: '{id, name, detail}'
+    post:
+      tags:
+        - manager
+      summary: Prida novu poziciu
+      parameters:
+        - in: body
+          name: pozicia
+          description: '{name, detail}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: success
+    put:
+      tags:
+        - manager
+      summary: Upravy poziciu
+      parameters:
+        - in: body
+          name: pozicia
+          description: '{id, name, detail}'
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: employee
+
+    delete:
+      tags:
+        - manager
+      summary: Odstrani poziciu
+      parameters:
+        - in: body
+          name: id
+          description: employeeId
+          required: true
+          schema:
+            $ref: ''
+      responses:
+        '200':
+          description: success
+definitions:
+  Reservation:
+    type: object
+    properties:
+      tableId:
+        type: string
+      dateStart:
+        type: string
+      dateEnd:
+        type: string
