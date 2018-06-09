@@ -1,4 +1,7 @@
 'use strict'
+/**
+ * EmployeePosition model
+ */
 module.exports = (sequelize, DataTypes) => {
   var EmployeePosition = sequelize.define('EmployeePosition', {
     name: DataTypes.STRING,

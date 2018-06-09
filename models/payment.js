@@ -1,4 +1,7 @@
 'use strict'
+/**
+ * Payment model
+ */
 module.exports = (sequelize, DataTypes) => {
   var Payment = sequelize.define('Payment', {
     date: DataTypes.DATE,
@@ -6,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     detail: DataTypes.STRING
   }, {})
   Payment.associate = function (models) {
-    // associations can be defined here
     Payment.hasOne(models.Order, {
       foreignKey: 'paymentId',
       onUpdate: 'CASCADE',

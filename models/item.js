@@ -1,4 +1,7 @@
 'use strict'
+/**
+ * Item model
+ */
 module.exports = (sequelize, DataTypes) => {
   var Item = sequelize.define('Item', {
     name: DataTypes.STRING,
@@ -10,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
     alcohol: DataTypes.FLOAT
   }, {})
   Item.associate = function (models) {
-    // associations can be defined here
     Item.belongsToMany(models.Order, {
       through: 'OrderItem',
       onDelete: 'CASCADE',

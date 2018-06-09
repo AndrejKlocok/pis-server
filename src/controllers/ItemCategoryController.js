@@ -1,6 +1,11 @@
 const {ItemCategory} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table ItemCategories.
+ */
 module.exports = {
+  /**
+    * Creates category instance.
+    */
   async createCategory (req, res) {
     try {
       const category = await ItemCategory.create(req.body)
@@ -11,6 +16,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Updates category with given data.
+    */
   async updateCategory (req, res) {
     try {
       const {id, name} = req.body
@@ -36,10 +44,12 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all categories.
+    */
   async getAllCategories (req, res) {
     try {
       const category = await ItemCategory.findAll({
-        // podmienka
       })
       res.send(category)
     } catch (err) {
@@ -48,6 +58,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Deletes category by given idô
+    */
   async deleteCategory (req, res) {
     const {id} = req.body
     try {
@@ -57,12 +70,11 @@ module.exports = {
         }
       })
       const category = await ItemCategory.findAll({
-        // podmienka
       })
       res.send(category)
     } catch (err) {
       res.status(500).send({
-        error: 'An error has occured during fetch'
+        error: 'An error has occured during deleting'
       })
     }
   }

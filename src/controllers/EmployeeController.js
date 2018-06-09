@@ -8,8 +8,13 @@ function jwSignUser (user) {
     expiresIn: week
   })
 }
-
+/**
+ * Module handles CRUD operations with table Employees.
+ */
 module.exports = {
+  /**
+   *  Employee login to IS.
+   */
   async login (req, res) {
     try {
       const {email, password} = req.body
@@ -18,11 +23,13 @@ module.exports = {
           email: email
         }
       })
+      /* Employee does not exists */
       if (!employee) {
         res.status(403).send({
           error: 'The login information was incorrect'
         })
       }
+      /* Wrong password */
       const isPasswordValid = password === employee.password
       if (!isPasswordValid) {
         res.status(403).send({
@@ -40,6 +47,9 @@ module.exports = {
       })
     }
   },
+  /**
+   * Returns all employees.
+   */
   async getAllEmployees (req, res) {
     try {
       const employees = await Employee.findAll({
@@ -52,6 +62,9 @@ module.exports = {
       })
     }
   },
+  /**
+   * Create new employee.
+   */
   async addNewEmployee (req, res) {
     try {
       const {name, surname, password, email, employeePositionId} = req.body
@@ -71,6 +84,9 @@ module.exports = {
       })
     }
   },
+  /**
+   *  Update employee by given data.
+   */
   async updateEmployee (req, res) {
     try {
       const {id, name, surname, password, email, employeePositionId} = req.body
@@ -100,6 +116,9 @@ module.exports = {
       })
     }
   },
+  /**
+   * Delete employee by given id.
+   */
   async deleteEmployee (req, res) {
     try {
       const {id} = req.body

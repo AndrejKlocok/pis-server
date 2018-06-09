@@ -1,4 +1,7 @@
 'use strict'
+/**
+ * Room model
+ */
 module.exports = (sequelize, DataTypes) => {
   var Room = sequelize.define('Room', {
     name: DataTypes.STRING,
@@ -6,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     detail: DataTypes.STRING
   }, {})
   Room.associate = function (models) {
-    // associations can be defined here
     Room.hasMany(models.Table, {
       foreignKey: 'roomId',
       onUpdate: 'CASCADE',

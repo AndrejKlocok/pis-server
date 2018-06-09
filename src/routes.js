@@ -16,192 +16,195 @@ const RequestController = require('./controllers/RequestController')
 
 module.exports = (app) => {
   /* User Interface */
-  app.post('/user/menu',
+  app.get('/user/menu',
     MenuController.getAllMenus)
 
   /* Employee requests */
-  app.post('/employee/listAllCustomers',
+  app.get('/employee/customers',
     CustomerController.getAllCustomers)
-
-  app.post('/employee/listCustomers',
-    CustomerController.getAllCustomersInTime)
 
   app.post('/employee/login',
     EmployeeController.login)
 
-  app.post('/employee/menuGet',
+  app.get('/employee/menu',
     MenuController.getAllMenus)
 
-  app.post('/employee/menuChange',
+  app.put('/employee/menu',
     MenuController.updateMenu)
 
-  app.post('/employee/menuAdd',
+  app.post('/employee/menu',
     MenuController.createMenu)
 
-  app.post('/employee/menuDelete',
+  app.delete('/employee/menu',
     MenuController.deleteMenu)
 
-  app.post('/employee/menuItemChange',
+  app.get('/employee/menuItem',
+    ItemController.getAllItems)
+
+  app.put('/employee/menuItem',
     ItemController.updateItem)
 
-  app.post('/employee/menuItemAdd',
+  app.post('/employee/menuItem',
     ItemController.createItem)
 
-  app.post('/employee/menuItemDelete',
+  app.delete('/employee/menuItem',
     ItemController.deleteItem)
 
-  app.post('/employee/tableCustomer',
+  app.get('/employee/tableCustomer',
     TableController.getTableByCustomer)
 
-  app.post('/employee/customersOfTable',
+  app.get('/employee/customersOfTable',
     CustomerController.getCustomersByTableId)
 
-  app.post('/employee/ordersCreate',
+  app.post('/employee/order',
     OrderController.createOrder)
 
-  app.post('/employee/ordersCurrent',
+  app.get('/employee/orderInTime',
     OrderController.getAllOrdersInTime)
 
-  app.post('/employee/ordersAll',
+  app.get('/employee/order',
     OrderController.getAllOrders)
 
-  app.post('/employee/orderChange',
+  app.put('/employee/order',
     OrderController.updateOrder)
 
-  app.post('/employee/orderDelete',
+  app.delete('/employee/order',
     OrderController.deleteOrder)
 
-  app.post('/employee/paymentCreate',
+  app.post('/employee/payment',
     PaymentController.createPayment)
 
-  app.post('/employee/paymentDelete',
+  app.delete('/employee/payment',
     PaymentController.deletePayment)
 
-  app.post('/employee/paymentGetAll',
+  app.get('/employee/payment',
     PaymentController.getAllPayments)
 
-  app.post('/employee/tableCreate',
+  app.post('/employee/table',
     TableController.createTable)
 
-  app.post('/employee/tableChange',
+  app.get('/employee/table',
+    TableController.getAllTables)
+
+  app.put('/employee/table',
     TableController.updateTable)
 
-  app.post('/employee/tableDelete',
+  app.delete('/employee/table',
     TableController.deleteTable)
 
-  app.post('/employee/roomTypeCreate',
+  app.post('/employee/roomType',
     RoomTypeController.createRoomType)
 
-  app.post('/employee/roomTypeChange',
+  app.put('/employee/roomType',
     RoomTypeController.updateRoomType)
 
-  app.post('/employee/roomTypeDelete',
+  app.delete('/employee/roomType',
     RoomTypeController.deleteRoomType)
 
-  app.post('/employee/roomCreate',
+  app.post('/employee/room',
     RoomController.createRoom)
 
-  app.post('/employee/roomChange',
+  app.put('/employee/room',
     RoomController.updateRoom)
 
-  app.post('/employee/roomDelete',
+  app.delete('/employee/room',
     RoomController.deleteRoom)
 
-  app.post('/employee/reservationList',
+  app.get('/employee/reservation',
     ReservationController.getReservationsById)
 
-  app.post('/employee/reservationCreate',
+  app.post('/employee/reservation',
     ReservationController.createReservation)
 
-  app.post('/employee/reservationChange',
+  app.put('/employee/reservation',
     ReservationController.updateReservation)
 
-  app.post('/employee/reservationDelete',
+  app.delete('/employee/reservation',
     ReservationController.deleteReservation)
 
-  app.post('/employee/itemCategoryList',
+  app.get('/employee/itemCategory',
     ItemCategoryController.getAllCategories)
 
-  app.post('/employee/itemCategoryCreate',
+  app.post('/employee/itemCategory',
     ItemCategoryController.createCategory)
 
-  app.post('/employee/itemCategoryChange',
+  app.put('/employee/itemCategory',
     ItemCategoryController.updateCategory)
 
-  app.post('/employee/itemCategoryDelete',
+  app.delete('/employee/itemCategory',
     ItemCategoryController.deleteCategory)
 
-  app.post('/employee/orderStateList',
+  app.get('/employee/orderState',
     OrderStateController.getAllStates)
 
-  app.post('/employee/orderStateCreate',
+  app.post('/employee/orderState',
     OrderStateController.createState)
 
-  app.post('/employee/orderStateChange',
+  app.put('/employee/orderState',
     OrderStateController.updateState)
 
-  app.post('/employee/orderStateDelete',
+  app.delete('/employee/orderState',
     OrderStateController.deleteState)
 
   app.post('/employee/assignRequest',
     RequestController.assignRequest)
 
-  app.post('/employee/requestList',
+  app.get('/employee/request',
     RequestController.getAllRequest)
 
   /* Customer interface  */
   app.post('/customer/Create',
     CustomerController.createCustomer)
 
-  app.post('/customer/tableView',
+  app.get('/customer/table',
     TableController.getAllTablesInTime)
 
-  app.post('/customer/orderList',
+  app.get('/customer/order',
     OrderController.getCustomerOrders)
 
-  app.post('/customer/ordersCurrent',
+  app.get('/customer/orderTime',
     OrderController.getAllOrdersInTime)
 
-  app.post('/customer/ordersNotPaid',
+  app.get('/customer/ordersNotPaid',
     OrderController.getNotPaidOrders)
 
-  app.post('/customer/orderAdd',
+  app.post('/customer/order',
     OrderController.createOrder)
 
-  app.post('/customer/orderInfo',
+  app.get('/customer/orderById',
     OrderController.getOrder)
 
-  app.post('/customer/menu',
+  app.get('/customer/menu',
     MenuController.getAllMenus)
 
-  app.post('/customer/leave',
+  app.put('/customer/leave',
     CustomerController.customerLeave)
 
   app.post('/customer/callEmployee',
     RequestController.createRequest)
 
   /* Manager interface */
-  app.post('/manager/positionsGet',
+  app.get('/manager/positions',
     EmployeePositionController.getAllPositions)
 
-  app.post('/manager/positionAdd',
+  app.post('/manager/position',
     EmployeePositionController.createPosition)
 
-  app.post('/manager/positionChange',
+  app.put('/manager/position',
     EmployeePositionController.updatePosition)
 
-  app.post('/manager/positionDelete',
+  app.delete('/manager/position',
     EmployeePositionController.deletePositions)
 
-  app.post('/manager/employeeGet',
+  app.get('/manager/employee',
     EmployeeController.getAllEmployees)
 
-  app.post('/manager/employeeAdd',
+  app.post('/manager/employee',
     EmployeeController.addNewEmployee)
 
-  app.post('/manager/employeeChange',
+  app.put('/manager/employee',
     EmployeeController.updateEmployee)
 
-  app.post('/manager/employeeDelete',
+  app.delete('/manager/employee',
     EmployeeController.deleteEmployee)
 }

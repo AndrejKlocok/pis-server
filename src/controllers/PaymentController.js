@@ -1,7 +1,12 @@
 const {Payment} = require('../../models')
 const {Order} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Payments.
+ */
 module.exports = {
+  /**
+    * Creates an instance of payment.
+    */
   async createPayment (req, res) {
     try {
       const {orderId, employeeId} = req.body
@@ -16,7 +21,7 @@ module.exports = {
         employeeId: employeeId,
         createdAt: new Date()
       })
-
+      /* After creating payment update order with foreign key */
       await Order.update({
         sum: order.sum,
         paymentId: payment.id,
@@ -35,6 +40,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all payments from db.
+    */
   async getAllPayments (req, res) {
     try {
       const payment = await Payment.findAll()
@@ -45,6 +53,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Deletes payment by given id.
+    */
   async deletePayment (req, res) {
     try {
       const {paymentId} = req.body

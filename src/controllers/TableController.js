@@ -1,11 +1,15 @@
 const {Table} = require('../../models')
 const {Customer} = require('../../models')
-const {RoomType} = require('../../models')
 const {Room} = require('../../models')
 const {Sequelize} = require('../../models')
 const {sequelize} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Tables.
+ */
 module.exports = {
+  /**
+    * Creates an instance of table.
+    */
   async createTable (req, res) {
     try {
       const {name, seatCount, roomId} = req.body
@@ -21,6 +25,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Updates table according to given data.
+    */
   async updateTable (req, res) {
     try {
       const {id, name, seatCount, roomId} = req.body
@@ -37,7 +44,6 @@ module.exports = {
         }
       })
       const table = await Table.findOne({
-        include: RoomType,
         where: {
           id: id
         }
@@ -49,16 +55,18 @@ module.exports = {
       })
     }
   },
+  /**
+    * Removes table by given id.
+    */
   async deleteTable (req, res) {
     try {
       const {tableId} = req.body
-      Table.destroy({
+      await Table.destroy({
         where: {
           id: tableId
         }
       })
       const table = await Table.findAll({
-        include: RoomType
       })
       res.send(table)
     } catch (err) {
@@ -67,10 +75,12 @@ module.exports = {
       })
     }
   },
+  /**
+    * Return all tables from db.
+    */
   async getAllTables (req, res) {
     try {
       const table = await Table.findAll({
-        // podmienka
         include: Customer
       })
       res.send(table)
@@ -80,12 +90,14 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all tables from db with count of free seats in time period.
+    */
   async getAllTablesInTime (req, res) {
     try {
-      const {time} = req.body
-      console.log(time)
-
+      var time = req.param('time')
       const Op = Sequelize.Op
+      /* Select all tables and count customers in time period */
       const table = await Table.findAll({
         attributes: ['id', 'name', 'seatCount', 'roomId', [sequelize.fn('count', sequelize.col('Customers.id')), 'customersCount']],
         include: [{
@@ -124,9 +136,12 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns table where the customer sits by given customerId.
+    */
   async getTableByCustomer (req, res) {
     try {
-      const { customerId } = req.body
+      const customerId = req.param('customerId')
       const table = await Table.findOne({
         include: [{
           model: Customer,

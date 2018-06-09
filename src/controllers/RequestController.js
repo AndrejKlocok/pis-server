@@ -1,8 +1,13 @@
 const {Request} = require('../../models')
 const {Customer} = require('../../models')
 const {Table} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Requests.
+ */
 module.exports = {
+  /**
+    * Creates an instance of request.
+    */
   async createRequest (req, res) {
     try {
       const {customerId, detail} = req.body
@@ -17,6 +22,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Employee assigns request with given id by removing it.
+    */
   async assignRequest (req, res) {
     try {
       const {id} = req.body
@@ -37,6 +45,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all requests from db.
+    */
   async getAllRequest (req, res) {
     try {
       const request = await Request.findAll({

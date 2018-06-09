@@ -3,8 +3,13 @@ const {Table} = require('../../models')
 const {Order} = require('../../models')
 const {Item} = require('../../models')
 const {Sequelize} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Customers.
+ */
 module.exports = {
+  /**
+   *  Creates new instance in db
+   */
   async createCustomer (req, res) {
     try {
       const {tableId} = req.body
@@ -21,50 +26,51 @@ module.exports = {
       })
     }
   },
+  /**
+   *  Returns all customers according to given time parameter.
+   */
   async getAllCustomers (req, res) {
     try {
-      const customer = await Customer.findAll({
-        // podmienka
-        include: Table
-      })
+      var customer
+      var time = req.param('time')
+
+      if (!time) {
+        customer = await Customer.findAll({
+          include: Table
+        })
+      } else {
+        const Op = Sequelize.Op
+        customer = await Customer.findAll({
+          include: Table,
+          where: Sequelize.and(
+            {
+              dateIn: {
+                [Op.lt]: time
+              }
+            },
+            Sequelize.or(
+              {
+                dateOut: null
+              },
+              {
+                dateOut: {
+                  [Op.gt]: time
+                }
+              }
+            )
+          )
+        })
+      }
       res.send(customer)
     } catch (err) {
       res.status(500).send({
-        error: 'An error has occured during fetch'
+        error: 'An error has occured during fetchig data'
       })
     }
   },
-  async getAllCustomersInTime (req, res) {
-    try {
-      const {time} = req.body
-      const Op = Sequelize.Op
-      const customers = await Customer.findAll({
-        include: Table,
-        where: Sequelize.and(
-          {
-            dateIn: {
-              [Op.lt]: time
-            }
-          },
-          Sequelize.or(
-            {
-              dateOut: null
-            },
-            {
-              dateOut: {
-                [Op.gt]: time
-              }
-            }
-          )
-        )
-      })
-      res.send(customers)
-    } catch (err) {
-      res.status(500).send({
-        error: 'An error has occured during fetch'
-      })
-    }
-  },
+  /**
+   *  Update the date of customer departure.
+   */
   async customerLeave (req, res) {
     const {customerId} = req.body
     try {
@@ -77,13 +83,16 @@ module.exports = {
       res.send('success')
     } catch (err) {
       res.status(500).send({
-        error: 'An error has occured during fetch'
+        error: 'An error has occured during customer leaving'
       })
     }
   },
+  /**
+   *  Returns all customers of the given table.
+   */
   async getCustomersByTableId (req, res) {
     try {
-      const {tableId} = req.body
+      const tableId = req.param('tableId')
       const customers = await Customer.findAll({
         include: [{
           model: Order,
@@ -99,7 +108,7 @@ module.exports = {
       res.send(customers)
     } catch (err) {
       res.status(500).send({
-        error: 'An error has occured during fetch'
+        error: 'An error has occured during fetching data'
       })
     }
   }

@@ -1,4 +1,7 @@
 'use strict'
+/**
+ * Reservation model
+ */
 module.exports = (sequelize, DataTypes) => {
   var Reservation = sequelize.define('Reservation', {
     name: DataTypes.STRING,
@@ -8,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
     contact: DataTypes.STRING
   }, {})
   Reservation.associate = function (models) {
-    // associations can be defined here
     Reservation.belongsTo(models.Employee, {
       foreignKey: 'employeeId',
       targetKey: 'id'

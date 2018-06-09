@@ -1,7 +1,12 @@
 const {Menu} = require('../../models')
 const {Item} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Menus.
+ */
 module.exports = {
+  /**
+    * Creates an instance of menu.
+    */
   async createMenu (req, res) {
     try {
       const {name, detail, validity} = req.body
@@ -19,10 +24,12 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all menus with its items from db.
+    */
   async getAllMenus (req, res) {
     try {
       const menu = await Menu.findAll({
-        // podmienka
         include: Item
       })
       res.send(menu)
@@ -32,6 +39,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all items of menu.
+    */
   async getItemsMenus (req, res) {
     try {
       const {menuId} = req.body
@@ -47,6 +57,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Updates menu with given data.
+    */
   async updateMenu (req, res) {
     try {
       const {id, name, detail, validity} = req.body
@@ -74,6 +87,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Deletes menu by given id.
+    */
   async deleteMenu (req, res) {
     try {
       const {id} = req.body
@@ -83,7 +99,6 @@ module.exports = {
         }
       })
       const menu = await Menu.findAll({
-        // podmienka
       })
       res.send(menu)
     } catch (err) {

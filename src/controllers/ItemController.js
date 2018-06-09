@@ -1,6 +1,11 @@
 const {Item} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Items.
+ */
 module.exports = {
+  /**
+    * Creates item instance.
+    */
   async createItem (req, res) {
     try {
       const {name, price, detail, allergens, grammage, volume, alcohol,
@@ -25,10 +30,12 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all items from db.
+    */
   async getAllItems (req, res) {
     try {
       const item = await Item.findAll({
-        // podmienka
       })
       res.send(item)
     } catch (err) {
@@ -37,6 +44,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Updates item with given data.
+    */
   async updateItem (req, res) {
     try {
       const {id, name, price, detail, allergens, grammage, volume, alcohol,
@@ -71,6 +81,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Deletes item by given id.
+    */
   async deleteItem (req, res) {
     try {
       const {id} = req.body
@@ -80,7 +93,6 @@ module.exports = {
         }
       })
       const item = await Item.findAll({
-        // podmienka
       })
       res.send(item)
     } catch (err) {

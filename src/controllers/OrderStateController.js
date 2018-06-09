@@ -1,6 +1,11 @@
 const {OrderState} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table OrderStates.
+ */
 module.exports = {
+  /**
+    * Creates an instance of state.
+    */
   async createState (req, res) {
     try {
       const state = await OrderState.create(req.body)
@@ -11,6 +16,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Update state according to given data.
+    */
   async updateState (req, res) {
     try {
       const {id, name} = req.body
@@ -36,10 +44,12 @@ module.exports = {
       })
     }
   },
+  /**
+    * Return all states from db.
+    */
   async getAllStates (req, res) {
     try {
       const state = await OrderState.findAll({
-        // podmienka
       })
       res.send(state)
     } catch (err) {
@@ -48,6 +58,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Deletes state by given id.
+    */
   async deleteState (req, res) {
     const {id} = req.body
     try {
@@ -57,7 +70,6 @@ module.exports = {
         }
       })
       const state = await OrderState.findAll({
-        // podmienka
       })
       res.send(state)
     } catch (err) {

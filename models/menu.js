@@ -1,4 +1,7 @@
 'use strict'
+/**
+ * Menu model
+ */
 module.exports = (sequelize, DataTypes) => {
   var Menu = sequelize.define('Menu', {
     name: DataTypes.STRING,
@@ -6,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     validity: DataTypes.BOOLEAN
   }, {})
   Menu.associate = function (models) {
-    // associations can be defined here
     Menu.hasMany(models.Item, {
       foreignKey: 'menuId',
       onUpdate: 'CASCADE',

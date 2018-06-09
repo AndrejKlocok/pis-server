@@ -1,7 +1,12 @@
 const {Room} = require('../../models')
 const {RoomType} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Rooms.
+ */
 module.exports = {
+  /**
+    * Creates an instance of room.
+    */
   async createRoom (req, res) {
     try {
       const {name, capacity, detail, roomTypeId} = req.body
@@ -20,6 +25,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Updates room according to given data.
+    */
   async updateRoom (req, res) {
     try {
       const {id, name, capacity, detail, roomTypeId} = req.body
@@ -49,6 +57,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Removes room by given id.
+    */
   async deleteRoom (req, res) {
     try {
       const {id} = req.body
@@ -58,7 +69,6 @@ module.exports = {
         }
       })
       const room = await Room.findAll({
-        // podmienka
         include: RoomType
       })
       res.send(room)
@@ -68,6 +78,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns all rooms from db.
+    */
   async getAllRoom (req, res) {
     try {
       const room = await Room.findAll({

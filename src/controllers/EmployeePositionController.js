@@ -1,6 +1,11 @@
 const {EmployeePosition} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table EmployeePositions.
+ */
 module.exports = {
+  /**
+    * Create position.
+    */
   async createPosition (req, res) {
     const {name, detail} = req.body
     try {
@@ -16,6 +21,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Update position.
+    */
   async updatePosition (req, res) {
     try {
       const {id, name, detail} = req.body
@@ -41,10 +49,12 @@ module.exports = {
       })
     }
   },
+  /**
+    * Return all positions.
+    */
   async getAllPositions (req, res) {
     try {
       const position = await EmployeePosition.findAll({
-        // podmienka
       })
       res.send(position)
     } catch (err) {
@@ -53,6 +63,9 @@ module.exports = {
       })
     }
   },
+  /**
+   * Delete given position by id.
+   */
   async deletePositions (req, res) {
     const {id} = req.body
     try {
@@ -62,12 +75,11 @@ module.exports = {
         }
       })
       const item = await EmployeePosition.findAll({
-        // podmienka
       })
       res.send(item)
     } catch (err) {
       res.status(500).send({
-        error: 'An error has occured during fetch'
+        error: 'An error has occured during deleting'
       })
     }
   }

@@ -2,8 +2,13 @@ const {Reservation} = require('../../models')
 const {Employee} = require('../../models')
 const {Table} = require('../../models')
 const {Sequelize} = require('../../models')
-
+/**
+ * Module handles CRUD operations with table Reservations.
+ */
 module.exports = {
+  /**
+    * Creates an instance of reservation.
+    */
   async createReservation (req, res) {
     try {
       const { name, detail, dateStart, dateEnd, contact, employeeId, tableId } = req.body
@@ -24,6 +29,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Update reservation with given data.
+    */
   async updateReservation (req, res) {
     try {
       const { id, name, detail, dateStart, dateEnd, contact, employeeId, tableId } = req.body
@@ -61,6 +69,9 @@ module.exports = {
       })
     }
   },
+  /**
+    * Delete reservation by given id.
+    */
   async deleteReservation (req, res) {
     try {
       const {id} = req.body
@@ -84,14 +95,20 @@ module.exports = {
       })
     }
   },
+  /**
+    * Returns reservation istances according to given parameters: tableId, time period (dateStar, dateEnd).
+    */
   async getReservationsById (req, res) {
     try {
-      const { tableId, dateStart, dateEnd } = req.body
+      var tableId = req.param('tableId')
+      var dateStart = req.param('dateStart')
+      var dateEnd = req.param('dateEnd')
+
       var whereStatement
       const Op = Sequelize.Op
 
       if (tableId && dateStart && dateEnd) {
-        // vsetky rezervacie v dany cas nad stolom tableId
+        /* all reservations in given time period and tableId */
         whereStatement = Sequelize.and(
           Sequelize.or(
             {
@@ -110,12 +127,12 @@ module.exports = {
           }
         )
       } else if (tableId) {
-        // vsetky rezervacie s tableId
+        /* all reservations by given tableId */
         whereStatement = {
           tableId: tableId
         }
       } else if (dateStart && dateEnd) {
-        // vsetky rezervacie v dany cas
+        /* all reservations by given time period */
         whereStatement = Sequelize.or(
           {
             dateStart: {
@@ -129,6 +146,7 @@ module.exports = {
           }
         )
       }
+      /* Return */
       const reservation = await Reservation.findAll({
         include: [{
           model: Employee
@@ -141,7 +159,7 @@ module.exports = {
       res.send(reservation)
     } catch (err) {
       res.status(500).send({
-        error: 'An error has occured during fetch'
+        error: 'An error has occured during searching for reservations, possible wrong arguments'
       })
     }
   }
